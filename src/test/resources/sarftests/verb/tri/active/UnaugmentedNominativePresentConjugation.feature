@@ -1,8 +1,8 @@
-Feature: unaugmented trilateral verb conjugation
-
-  Scenario Outline: active unaugmented trilateral verb present conjugation
+Feature: unaugmented trilateral verb conjugation in nominative state
+# المضارع المرفوع المبني للمعلوم
+  Scenario Outline: active unaugmented trilateral verb present conjugation in nominative state
     Given an unaugmented verb
-    When the verb is conjugated
+    When the verb is conjugated in "Nominative" state
     Then first person singular present conjugation the verb "<verb>" and conjugation of "<conjugation>" is "<single_first>"
     And first person plural present conjugation the verb "<verb>" and conjugation of "<conjugation>" is "<plural_first>"
     And masculine singular second person present conjugation the verb "<verb>" and conjugation of "<conjugation>" is "<m_single_second>"
