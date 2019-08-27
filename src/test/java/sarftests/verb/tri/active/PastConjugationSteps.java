@@ -7,20 +7,18 @@ import cucumber.api.java.en.When;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
-import sarf.verb.trilateral.unaugmented.*;
+import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.active.ActivePastConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static sarftests.PronounIndex.*;
 
-public class ConjugationSteps {
+public class PastConjugationSteps {
     @Given("an unaugmented verb")
     public void anUnaugmentedVerb() {
     }
@@ -127,7 +125,7 @@ public class ConjugationSteps {
         return result;
     }
 
-    private static UnaugmentedTrilateralRoot createRoot(String verb, int conjugation) {
+    static UnaugmentedTrilateralRoot createRoot(String verb, int conjugation) {
         List<UnaugmentedTrilateralRoot> unaugmentedList = null;
         try {
             unaugmentedList = SarfDictionary.getInstance().getUnaugmentedTrilateralRoots(verb);

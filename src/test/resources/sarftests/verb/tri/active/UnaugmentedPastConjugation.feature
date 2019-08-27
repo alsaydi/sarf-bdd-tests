@@ -1,6 +1,6 @@
 Feature: unaugmented trilateral verb conjugation
 
-  Scenario Outline: active unaugmented trilateral verb conjugation
+  Scenario Outline: active unaugmented trilateral verb past conjugation
     Given an unaugmented verb
     When the verb is conjugated
     Then the first person singular conjugation of the verb "<verb>" and conjugation of "<conjugation>" is "<single_first>"
