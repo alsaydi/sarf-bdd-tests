@@ -5,7 +5,7 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 @ScenarioScoped
 public class TestContext {
     public TestContext(){
-        PresentVerbState = sarftests.PresentVerbState.Nominative;
+        VerbState = VerbState.Nominative;
     }
-    public PresentVerbState PresentVerbState;
+    public VerbState VerbState;
 }

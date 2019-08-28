@@ -9,7 +9,8 @@ import sarf.kov.KovRulesManager;
 import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.active.ActivePresentConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
-import sarftests.PresentVerbState;
+import sarf.verb.trilateral.unaugmented.UnaugmentedImperativeConjugator;
+import sarftests.VerbState;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
 
@@ -29,7 +30,7 @@ public class PresentConjugationSteps {
     }
     @When("the verb is conjugated in {string} state")
     public void theVerbIsConjugatedInState(String state) {
-       this.testContext.PresentVerbState = PresentVerbState.valueOf(state);
+       this.testContext.VerbState = VerbState.valueOf(state);
     }
     @Then("first person singular present conjugation the verb {string} and conjugation of {string} is {string}")
     public void firstPersonSingularPresentConjugationTheVerbAndConjugationOfIs(String verb, String conjugation, String expected) {
@@ -102,24 +103,33 @@ public class PresentConjugationSteps {
     }
 
     private List<String> getPresentVerbConjugations(String rootLetters, int conjugation) {
-
+        var verbStateString = SystemConstants.PRESENT_TENSE;
+        if(this.testContext.VerbState == VerbState.Imperative){
+            verbStateString = SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE;
+        }else if(this.testContext.VerbState == VerbState.ImperativeEmphasized){
+            verbStateString = SystemConstants.EMPHASIZED_IMPERATIVE_TENSE;
+        }
         var rule = KovRulesManager.getInstance().getTrilateralKovRule(rootLetters.charAt(0), rootLetters.charAt(1), rootLetters.charAt(2));
         var kov = rule.getKov();
 
         var root = PastConjugationSteps.createRoot(rootLetters, conjugation);
-        var verbs = getVerbs(root, testContext.PresentVerbState);
+        var verbs = getVerbs(root, testContext.VerbState);
         sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
                 .getInstance()
-                .build(root, kov, verbs, SystemConstants.PRESENT_TENSE, true);
+                .build(root, kov, verbs, verbStateString, true);
         var result = new ArrayList<String>();
         for (var v : conjResult.getFinalResult()) {
+            if(v == null){
+                result.add("");
+                continue;
+            }
             result.add(v.toString());
         }
         return result;
     }
 
-    private List getVerbs(UnaugmentedTrilateralRoot root, PresentVerbState presentVerbState) {
-        switch (presentVerbState){
+    private List getVerbs(UnaugmentedTrilateralRoot root, VerbState verbState) {
+        switch (verbState){
             case Nominative:
                 return ActivePresentConjugator.getInstance().createNominativeVerbList(root);
             case Accusative:
@@ -128,9 +138,13 @@ public class PresentConjugationSteps {
                 return ActivePresentConjugator.getInstance().createJussiveVerbList(root);
             case Emphasized:
                 return ActivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+            case Imperative:
+                return UnaugmentedImperativeConjugator.getInstance().createVerbList(root);
+            case ImperativeEmphasized:
+                return UnaugmentedImperativeConjugator.getInstance().createEmphasizedVerbList(root);
             case None:
             default:
-                fail("invalid present verb state " + presentVerbState);
+                fail("invalid present verb state " + verbState);
         }
         return null;
     }
