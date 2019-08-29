@@ -1,4 +1,4 @@
-Feature: unaugmented trilateral verb conjugation in accusative state
+Feature: unaugmented trilateral verb conjugation in emphasized state
 # المضارع المؤكد المبني للمعلوم
   Scenario Outline: active unaugmented trilateral verb present conjugation in accusative state
     Given an unaugmented verb
