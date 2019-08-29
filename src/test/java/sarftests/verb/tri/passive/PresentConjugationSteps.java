@@ -126,6 +126,8 @@ public class PresentConjugationSteps {
                 return PassivePresentConjugator.getInstance().createNominativeVerbList(root);
             case PassiveAccusative:
                 return PassivePresentConjugator.getInstance().createAccusativeVerbList(root);
+            case PassiveJussive:
+                return PassivePresentConjugator.getInstance().createJussiveVerbList(root);
             case None:
             default:
                 fail("invalid present passive verb state " + verbState);
