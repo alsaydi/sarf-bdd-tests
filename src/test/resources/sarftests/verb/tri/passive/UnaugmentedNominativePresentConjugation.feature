@@ -1,6 +1,6 @@
 Feature: unaugmented trilateral verb conjugation in nominative passive state
-# المضارع المرفوع المبني للمعلوم
-  Scenario Outline: active unaugmented trilateral verb present conjugation in nominative passive  state
+# المضارع المرفوع المبني للمجهول
+  Scenario Outline: active unaugmented trilateral verb present conjugation in nominative passive state
     Given an unaugmented verb
     When the passive verb is conjugated in "PassiveNominative" state
     Then first person singular present conjugation the passive verb "<verb>" and conjugation of "<conjugation>" is "<single_first>"
