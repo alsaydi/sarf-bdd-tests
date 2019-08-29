@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static sarftests.verb.tri.Common.createRoot;
 
 public class PresentConjugationSteps {
     private final TestContext testContext;
@@ -112,7 +113,7 @@ public class PresentConjugationSteps {
         var rule = KovRulesManager.getInstance().getTrilateralKovRule(rootLetters.charAt(0), rootLetters.charAt(1), rootLetters.charAt(2));
         var kov = rule.getKov();
 
-        var root = PastConjugationSteps.createRoot(rootLetters, conjugation);
+        var root = createRoot(rootLetters, conjugation);
         var verbs = getVerbs(root, testContext.VerbState);
         sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
                 .getInstance()

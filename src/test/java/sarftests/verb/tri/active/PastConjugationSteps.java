@@ -4,10 +4,9 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import sarf.SarfDictionary;
+import sarf.KindOfVerb;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
-import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.active.ActivePastConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
 
@@ -15,8 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 import static sarftests.PronounIndex.*;
+import static sarftests.verb.tri.Common.createRoot;
+import static sarftests.verb.tri.Common.getKindOfVerb;
 
 public class PastConjugationSteps {
     @Given("an unaugmented verb")
@@ -110,8 +110,7 @@ public class PastConjugationSteps {
     }
 
     private static List<String> getPastVerbConjugations(String rootLetters, int conjugation) {
-        var rule = KovRulesManager.getInstance().getTrilateralKovRule(rootLetters.charAt(0), rootLetters.charAt(1), rootLetters.charAt(2));
-        var kov = rule.getKov();
+        KindOfVerb kov = getKindOfVerb(rootLetters);
 
         var root = createRoot(rootLetters, conjugation);
         var verbs = ActivePastConjugator.getInstance().createVerbList(root);
@@ -123,19 +122,5 @@ public class PastConjugationSteps {
             result.add(v.toString());
         }
         return result;
-    }
-
-    static UnaugmentedTrilateralRoot createRoot(String verb, int conjugation) {
-        List<UnaugmentedTrilateralRoot> unaugmentedList = null;
-        try {
-            unaugmentedList = SarfDictionary.getInstance().getUnaugmentedTrilateralRoots(verb);
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
-        }
-        assert unaugmentedList != null;
-        return unaugmentedList.stream()
-                .filter(r -> r.getConjugation().getValue() == conjugation)
-                .findFirst().orElseThrow();
     }
 }
