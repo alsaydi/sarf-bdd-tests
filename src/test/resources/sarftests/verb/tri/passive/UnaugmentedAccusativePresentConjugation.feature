@@ -359,4 +359,3 @@ Feature: unaugmented trilateral verb conjugation in accusative passive state
       | يءس  | 6           |              |              |                 |                 |               |                 |                 | يُوءَسَ        | تُوءَسَ        |              |              |                |                |
       | يبس  | 4           |              |              |                 |                 |               |                 |                 | يُوبَسَ        | تُوبَسَ        |              |              |                |                |
       | يبس  | 6           |              |              |                 |                 |               |                 |                 | يُوبَسَ        | تُوبَسَ        |              |              |                |                |
-    
