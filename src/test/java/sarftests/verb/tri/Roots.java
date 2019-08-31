@@ -1,5 +1,6 @@
 package sarftests.verb.tri;
 
+import com.google.inject.Inject;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarf.KindOfVerb;
@@ -9,6 +10,7 @@ import sarf.kov.KovRulesManager;
 import sarf.kov.TrilateralKovRule;
 import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
+import sarf.verb.trilateral.unaugmented.active.ActivePastConjugator;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,13 +19,24 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Roots {
+    private final SarfDictionary sarfDictionary;
+    private final KovRulesManager kovRulesManager;
+    private final ActivePastConjugator activePastConjugator;
+
+    @Inject
+    public Roots(SarfDictionary sarfDictionary, KovRulesManager kovRulesManager, ActivePastConjugator activePastConjugator){
+        this.sarfDictionary = sarfDictionary;
+        this.kovRulesManager = kovRulesManager;
+        this.activePastConjugator = activePastConjugator;
+    }
+
     @When("I request all roots")
     public void iRequestAllRoots() {
     }
 
     @Then("for a verb {string} all tasareef {string} are returned")
     public void forAVerbAllTasareefAreReturned(String root, String csvTasareef) throws Exception {
-        List<UnaugmentedTrilateralRoot> unaugmentedList = SarfDictionary.getInstance().getUnaugmentedTrilateralRoots(root);
+        List<UnaugmentedTrilateralRoot> unaugmentedList = sarfDictionary.getUnaugmentedTrilateralRoots(root);
 
         var tasareefGroups = csvTasareef.split(",");
         assertThat(unaugmentedList).isNotNull();
@@ -48,8 +61,8 @@ public class Roots {
         }
     }
 
-    private static KindOfVerb getKindOfVerb(String root){
-        var rule = KovRulesManager.getInstance().getTrilateralKovRule(root.charAt(0), root.charAt(1), root.charAt(2));
+    private KindOfVerb getKindOfVerb(String root){
+        var rule = kovRulesManager.getTrilateralKovRule(root.charAt(0), root.charAt(1), root.charAt(2));
         return rule.getKov();
     };
 
@@ -61,7 +74,7 @@ public class Roots {
     }
 
     private String getPastRootText(UnaugmentedTrilateralRoot root, KindOfVerb kov) {
-        String pastRootText = sarf.verb.trilateral.unaugmented.active.ActivePastConjugator.getInstance().createVerb(7, root).toString();
+        String pastRootText = activePastConjugator.createVerb(7, root).toString();
         List<String> conjugations = createEmptyList();
         conjugations.set(7, pastRootText);
         sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier

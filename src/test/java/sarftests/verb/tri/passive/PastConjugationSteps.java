@@ -1,5 +1,6 @@
 package sarftests.verb.tri.passive;
 
+import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import sarf.KindOfVerb;
@@ -9,15 +10,23 @@ import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
 import sarf.verb.trilateral.unaugmented.passive.PassivePastConjugator;
 import sarftests.PronounIndex;
+import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static sarftests.verb.tri.Common.createRoot;
-import static sarftests.verb.tri.Common.getKindOfVerb;
 
 public class PastConjugationSteps {
+    private final Common common;
+    private final PassivePastConjugator passivePastConjugator;
+
+    @Inject
+    public PastConjugationSteps(Common common, PassivePastConjugator passivePastConjugator){
+        this.common = common;
+        this.passivePastConjugator = passivePastConjugator;
+    }
+
     @Then("the first person singular past conjugation of the passive verb {string} and conjugation of {string} is {string}")
     public void theFirstPersonSingularPastConjugationOfThePassiveVerbAndConjugationOfIs(String verb, String conjugation, String expected) {
         assertConjugation(verb, conjugation, expected, PronounIndex.FirstPersonSingular);
@@ -88,10 +97,10 @@ public class PastConjugationSteps {
         assertThat(verbs.get(pronounIndex.getValue())).isEqualTo(expected);
     }
 
-    private static List<String> getPastPassiveVerbConjugations(String rootLetters, int conjugation){
-        KindOfVerb kov = getKindOfVerb(rootLetters);
-        var root = createRoot(rootLetters, conjugation);
-        var result = PassivePastConjugator.getInstance().createVerbList(root);
+    private List<String> getPastPassiveVerbConjugations(String rootLetters, int conjugation){
+        KindOfVerb kov = common.getKindOfVerb(rootLetters);
+        var root = common.createRoot(rootLetters, conjugation);
+        var result = passivePastConjugator.createVerbList(root);
         ConjugationResult conjResult = UnaugmentedTrilateralModifier.getInstance().build(root, kov, result, SystemConstants.PAST_TENSE, false);
         result = conjResult.getFinalResult();
         var conjugatedResult = new ArrayList<String>();

@@ -1,5 +1,6 @@
 package sarftests.verb.tri.active;
 
+import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,16 +10,24 @@ import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
 import sarf.verb.trilateral.unaugmented.active.ActivePastConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
+import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static sarftests.PronounIndex.*;
-import static sarftests.verb.tri.Common.createRoot;
-import static sarftests.verb.tri.Common.getKindOfVerb;
 
 public class PastConjugationSteps {
+    private final ActivePastConjugator activePastConjugator;
+    private final Common common;
+
+    @Inject
+    public PastConjugationSteps(ActivePastConjugator activePastConjugator, Common common){
+        this.activePastConjugator = activePastConjugator;
+        this.common = common;
+    }
+
     @Given("an unaugmented verb")
     public void anUnaugmentedVerb() {
     }
@@ -109,11 +118,11 @@ public class PastConjugationSteps {
         assertThat(verbs.get(ThirdPersonFemininePlural.getValue())).isEqualTo(arg1);
     }
 
-    private static List<String> getPastVerbConjugations(String rootLetters, int conjugation) {
-        KindOfVerb kov = getKindOfVerb(rootLetters);
+    private List<String> getPastVerbConjugations(String rootLetters, int conjugation) {
+        KindOfVerb kov = common.getKindOfVerb(rootLetters);
 
-        var root = createRoot(rootLetters, conjugation);
-        var verbs = ActivePastConjugator.getInstance().createVerbList(root);
+        var root = common.createRoot(rootLetters, conjugation);
+        var verbs = activePastConjugator.createVerbList(root);
         sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
                 .getInstance()
                 .build(root, kov, verbs, SystemConstants.PAST_TENSE, true);

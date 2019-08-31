@@ -11,21 +11,22 @@ import sarf.verb.trilateral.unaugmented.passive.PassivePresentConjugator;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
 import sarftests.VerbState;
+import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static sarftests.verb.tri.Common.createRoot;
-import static sarftests.verb.tri.Common.getKindOfVerb;
 
 public class PresentConjugationSteps {
     private final TestContext testContext;
+    private final Common common;
 
     @Inject
-    public PresentConjugationSteps(TestContext testContext){
+    public PresentConjugationSteps(TestContext testContext, Common common){
         this.testContext = testContext;
+        this.common = common;
     }
 
     @When("the passive verb is conjugated in {string} state")
@@ -103,8 +104,8 @@ public class PresentConjugationSteps {
         assertThat(verbs.get(pronounIndex.getValue())).isEqualTo(expected);
     }
     private List<String> getPresentPassiveVerbConjugations(String rootLetters, int conjugation){
-        var kov = getKindOfVerb(rootLetters);
-        var root = createRoot(rootLetters, conjugation);
+        var kov = common.getKindOfVerb(rootLetters);
+        var root = common.createRoot(rootLetters, conjugation);
         var verbs = getVerbs(root, this.testContext.VerbState);
         sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
                 .getInstance()

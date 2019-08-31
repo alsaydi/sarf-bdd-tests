@@ -13,6 +13,7 @@ import sarf.verb.trilateral.unaugmented.UnaugmentedImperativeConjugator;
 import sarftests.VerbState;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
+import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +21,15 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
-import static sarftests.verb.tri.Common.createRoot;
-import static sarftests.verb.tri.Common.getKindOfVerb;
 
 public class PresentConjugationSteps {
     private final TestContext testContext;
+    private final Common common;
 
     @Inject
-    public PresentConjugationSteps(TestContext testContext){
+    public PresentConjugationSteps(TestContext testContext, Common common){
         this.testContext = testContext;
+        this.common = common;
     }
     @When("the verb is conjugated in {string} state")
     public void theVerbIsConjugatedInState(String state) {
@@ -112,9 +113,9 @@ public class PresentConjugationSteps {
             verbStateString = SystemConstants.EMPHASIZED_IMPERATIVE_TENSE;
         }
 
-        var kov = getKindOfVerb(rootLetters);
+        var kov = common.getKindOfVerb(rootLetters);
 
-        var root = createRoot(rootLetters, conjugation);
+        var root = common.createRoot(rootLetters, conjugation);
         var verbs = getVerbs(root, testContext.VerbState);
         sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
                 .getInstance()
