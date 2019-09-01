@@ -3,12 +3,12 @@ Feature: تصريف اسم المفعول من الثلاثي المجرد
   Scenario Outline: unaugmented trilateral passive participle
     Given an unaugmented verb
     When the derived noun is "PassiveParticiple" and the root type is "TrilateralUnaugmented"
-    Then singular masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_single_n>" and accusative "<m_single_a>" and genitive "<m_single_g>"
-    And  singular feminine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<f_single_n>" and accusative "<f_single_a>" and genitive "<f_single_g>"
-    And  dual masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_dual_n>" and accusative "<m_dual_a>" and genitive "<m_dual_g>"
-    And  dual feminine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<f_dual_n>" and accusative "<f_dual_a>" and genitive "<f_dual_g>"
-    And  plural masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_plural_n>" and accusative "<m_plural_a>" and genitive "<m_plural_g>"
-    And  plural feminine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<f_plural_n>" and accusative "<f_plural_a>" and genitive "<f_plural_g>"
+    Then singular masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_single_n>" and accusative "<m_single_a>" and genitive "<m_single_g>" with formula ""
+    And  singular feminine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<f_single_n>" and accusative "<f_single_a>" and genitive "<f_single_g>" with formula ""
+    And  dual masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_dual_n>" and accusative "<m_dual_a>" and genitive "<m_dual_g>" with formula ""
+    And  dual feminine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<f_dual_n>" and accusative "<f_dual_a>" and genitive "<f_dual_g>" with formula ""
+    And  plural masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_plural_n>" and accusative "<m_plural_a>" and genitive "<m_plural_g>" with formula ""
+    And  plural feminine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<f_plural_n>" and accusative "<f_plural_a>" and genitive "<f_plural_g>" with formula ""
     Examples:
       | verb | conjugation | m_single_n | f_single_n | m_dual_n   | f_dual_n     | m_plural_n | f_plural_n | m_single_a | f_single_a | m_dual_a    | f_dual_a      | m_plural_a | f_plural_a | m_single_g | f_single_g | m_dual_g    | f_dual_g      | m_plural_g | f_plural_g |
       | ءوب | 1 | مَؤُوبٌ | مَؤُوبَةٌ | مَؤُوبَانِ | مَؤُوبَتَانِ | مَؤُوبُونَ | مَؤُوبَاتٌ | مَؤُوبًا | مَؤُوبَةً | مَؤُوبَيْنِ | مَؤُوبَتَيْنِ | مَؤُوبِينَ | مَؤُوبَاتٍ | مَؤُوبٍ | مَؤُوبَةٍ | مَؤُوبَيْنِ | مَؤُوبَتَيْنِ | مَؤُوبِينَ | مَؤُوبَاتٍ |

@@ -27,56 +27,55 @@ public class NounConjugationSteps {
         testContext.RootType = RootType.valueOf(rootType);
     }
 
-    @Then("singular masculine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string}")
-    public void singularMasculineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive) {
-        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeSingleMasculine);
-        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeSingleMasculine);
-        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveSingleMasculine);
+    @Then("singular masculine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string} with formula {string}")
+    public void singularMasculineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive, String formula) {
+        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeSingleMasculine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeSingleMasculine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveSingleMasculine, formula);
     }
 
-    @And("singular feminine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string}")
-    public void singularFeminineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive) {
-        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeSingleFeminine);
-        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeSingleFeminine);
-        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveSingleFeminine);
+    @And("singular feminine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string} with formula {string}")
+    public void singularFeminineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive, String formula) {
+        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeSingleFeminine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeSingleFeminine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveSingleFeminine, formula);
     }
 
-    @And("dual masculine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string}")
-    public void dualMasculineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive) {
-        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeDualMasculine);
-        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeDualMasculine);
-        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveDualMasculine);
+    @And("dual masculine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string} with formula {string}")
+    public void dualMasculineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive, String formula) {
+        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeDualMasculine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeDualMasculine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveDualMasculine, formula);
     }
 
-    @And("dual feminine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string}")
-    public void dualFeminineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive) {
-        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeDualFeminine);
-        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeDualFeminine);
-        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveDualFeminine);
+    @And("dual feminine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string} with formula {string}")
+    public void dualFeminineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive, String formula) {
+        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativeDualFeminine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativeDualFeminine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitiveDualFeminine, formula);
     }
 
-    @And("plural masculine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string}")
-    public void pluralMasculineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive) {
-        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativePluralMasculine);
-        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativePluralMasculine);
-        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitivePluralMasculine);
+    @And("plural masculine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string} with formula {string}")
+    public void pluralMasculineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive, String formula) {
+        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativePluralMasculine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativePluralMasculine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitivePluralMasculine, formula);
     }
 
-    @And("plural feminine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string}")
-    public void pluralFeminineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive) {
-        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativePluralFeminine);
-        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativePluralFeminine);
-        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitivePluralFeminine);
+    @And("plural feminine nouns of the verb {string} in conjugation {string} are nominative {string} and accusative {string} and genitive {string} with formula {string}")
+    public void pluralFeminineNounsOfTheVerbInConjugationAreNominativeAndAccusativeAndGenitive(String verb, String conjugation, String nominative, String accusative, String genitive, String formula) {
+        assertNoun(verb, Integer.parseInt(conjugation), nominative, NounIndex.NominativePluralFeminine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), accusative, NounIndex.AccusativePluralFeminine, formula);
+        assertNoun(verb, Integer.parseInt(conjugation), genitive, NounIndex.GenitivePluralFeminine, formula);
     }
 
-    private void assertNoun(String verb, int conjugation, String expected, NounIndex nounIndex){
-        var nouns = getNouns(verb, conjugation);
+    private void assertNoun(String verb, int conjugation, String expected, NounIndex nounIndex, String formula){
+        var nouns = getNouns(verb, conjugation, formula);
         assertThat(nouns.get(nounIndex.getValue())).isEqualTo(expected);
     }
 
-    private List<String> getNouns(String rootLetters, int conjugation){
+    private List<String> getNouns(String rootLetters, int conjugation, String formula){
         var nounProvider = this.nounProviderFactory.create(testContext.RootType, testContext.NounType);
-        return nounProvider.getNouns(rootLetters, conjugation);
+        return nounProvider.getNouns(rootLetters, formula, conjugation);
     }
 }
-
