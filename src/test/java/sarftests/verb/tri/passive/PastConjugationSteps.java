@@ -104,7 +104,7 @@ public class PastConjugationSteps {
         ConjugationResult conjResult = UnaugmentedTrilateralModifier.getInstance().build(root, kov, result, SystemConstants.PAST_TENSE, false);
         result = conjResult.getFinalResult();
         var conjugatedResult = new ArrayList<String>();
-        for(var r : result){
+        for(Object r : result){
             if(r == null){
                 conjugatedResult.add("");
                 continue;

@@ -24,7 +24,7 @@ public class ActiveParticipleNounProvider implements INounProvider {
     }
 
     @Override
-    public List<String> getNouns(String rootLetters, int conjugation) {
+    public List<String> getNouns(String rootLetters, String formula, int conjugation) {
         var kov = common.getKindOfVerb(rootLetters);
         var root = common.createRoot(rootLetters, conjugation);
         var rawNouns = unaugmentedTrilateralActiveParticipleConjugator.createNounList(root, null); /* there is only one formula */

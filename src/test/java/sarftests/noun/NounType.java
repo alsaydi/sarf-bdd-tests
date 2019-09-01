@@ -1,6 +1,6 @@
 package sarftests.noun;
 
 public enum NounType {
-    ActiveParticiple, PassiveParticiple
+    ActiveParticiple, PassiveParticiple, EmphasizedActiveParticiple
 }
 

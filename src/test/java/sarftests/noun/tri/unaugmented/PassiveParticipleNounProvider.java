@@ -24,7 +24,7 @@ public class PassiveParticipleNounProvider implements INounProvider {
     }
 
     @Override
-    public List<String> getNouns(String rootLetters, int conjugations) {
+    public List<String> getNouns(String rootLetters, String formula, int conjugations) {
         var root = common.createRoot(rootLetters, conjugations);
         var rawNouns = this.conjugator.createNounList(root, null);
         var conjugationResult = this.passiveParticipleModifier.build(root, common.getKindOfVerb(rootLetters), rawNouns, null);
