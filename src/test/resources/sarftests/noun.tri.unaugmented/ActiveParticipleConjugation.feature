@@ -1,4 +1,4 @@
-Feature: تصريف اسم الفاعل المبني للمعلوم من الفعل الثلاثي المجرد
+Feature: تصريف اسم الفاعل من الفعل الثلاثي المجرد
 
   Scenario Outline: unaugmented trilateral active participle
     Given an unaugmented verb
