@@ -1,20 +1,22 @@
 package sarftests.noun.tri.unaugmented;
 
 import com.google.inject.Inject;
-import sarf.noun.trilateral.unaugmented.modifier.timeandplace.TimeAInstrumentalModifier ndPlaceModifier;
-import sarf.noun.trilateral.unaugmented.timeandplace.StandardInstrumentalConjugator;
+import sarf.noun.NounFormula;
+import sarf.noun.trilateral.unaugmented.instrumental.StandardInstrumentalConjugator;
+import sarf.noun.trilateral.unaugmented.instrumental.NonStandardInstrumentalConjugator;
+import sarf.noun.trilateral.unaugmented.modifier.instrumental.InstrumentalModifier;
 import sarftests.noun.INounProvider;
 import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TimeAndPlaceNounProvider implements INounProvider {
+public class InstrumentNounProvider implements INounProvider {
 
     private final Common common;
     private final StandardInstrumentalConjugator conjugator;
     private final NonStandardInstrumentalConjugator nonStandardConjugator;
-    private final InstrumentalModifier  modifier;
+    private final InstrumentalModifier modifier;
 
     @Inject
     public InstrumentNounProvider(Common common
@@ -29,10 +31,10 @@ public class TimeAndPlaceNounProvider implements INounProvider {
 
     private static final List<String> standardFormulas = new ArrayList<>();
     static {
-        formulas.add("مِفْعَل");
-        formulas.add("مِفْعَلَة");
-        formulas.add("مِفْعَال");
-        formulas.add("فَعَّالَة");
+        standardFormulas.add("مِفْعَل");
+        standardFormulas.add("مِفْعَلَة");
+        standardFormulas.add("مِفْعَال");
+        standardFormulas.add("فَعَّالَة");
     }
 
     @Override
@@ -40,16 +42,16 @@ public class TimeAndPlaceNounProvider implements INounProvider {
         var root = common.createRoot(rootLetters, conjugation);
         var kov = common.getKindOfVerb(rootLetters);
         List<NounFormula> rawNouns;
-        if(rawNouns == null){
-            return new ArrayList<String>();
-        }
         if(standardFormulas.contains(formula)){
             rawNouns = conjugator.createNounList(root, formula);
         }
         else{
             rawNouns = nonStandardConjugator.createNounList(root, formula);
         }
-        
+        if(rawNouns == null){
+            return new ArrayList<>();
+        }
+
         var finalResult = modifier.build(root, kov, rawNouns, formula).getFinalResult();
         var result = new ArrayList<String>();
         for(Object n : finalResult){

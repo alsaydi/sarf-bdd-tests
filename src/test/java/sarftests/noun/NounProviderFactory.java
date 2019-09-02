@@ -2,10 +2,7 @@ package sarftests.noun;
 
 import com.google.inject.Inject;
 import sarftests.RootType;
-import sarftests.noun.tri.unaugmented.ActiveParticipleNounProvider;
-import sarftests.noun.tri.unaugmented.EmphasizedActiveParticipleNounProvider;
-import sarftests.noun.tri.unaugmented.PassiveParticipleNounProvider;
-import sarftests.noun.tri.unaugmented.TimeAndPlaceNounProvider;
+import sarftests.noun.tri.unaugmented.*;
 
 public class NounProviderFactory {
     private final ActiveParticipleNounProvider activeParticipleNounProvider;
