@@ -11,19 +11,23 @@ public class NounProviderFactory {
     private final TimeAndPlaceNounProvider timeAndPlaceNounProvider;
     private final InstrumentNounProvider instrumentNounProvider;
     private final AssimilateNounProvider assimilateNounProvider;
+    private final ElativeNounProvider elativeNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
             , PassiveParticipleNounProvider passiveParticipleNounProvider
             , EmphasizedActiveParticipleNounProvider emphasizedActiveParticipleNounProvider
             , TimeAndPlaceNounProvider timeAndPlaceNounProvider
-            , InstrumentNounProvider instrumentNounProvider, AssimilateNounProvider assimilateNounProvider){
+            , InstrumentNounProvider instrumentNounProvider
+            , AssimilateNounProvider assimilateNounProvider
+            , ElativeNounProvider elativeNounProvider){
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
         this.timeAndPlaceNounProvider = timeAndPlaceNounProvider;
         this.instrumentNounProvider = instrumentNounProvider;
         this.assimilateNounProvider = assimilateNounProvider;
+        this.elativeNounProvider = elativeNounProvider;
     }
 
     public INounProvider create(RootType rootType, NounType nounType){
@@ -47,6 +51,8 @@ public class NounProviderFactory {
                 return instrumentNounProvider;
             case Assimilate:
                 return assimilateNounProvider;
+            case Elative:
+                return elativeNounProvider;
         }
         return null;
     }

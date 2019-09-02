@@ -1,6 +1,6 @@
 Feature: تصريف اسم الصفة المشبهة من الفعل الثلاثي المجرد
 
-  Scenario Outline: unaugmented trilateral instrument nouns
+  Scenario Outline: unaugmented trilateral assimilate adjectives
     Given an unaugmented verb
     When the derived noun is "Assimilate" and the root type is "TrilateralUnaugmented"
     Then singular masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_single_n>" and accusative "<m_single_a>" and genitive "<m_single_g>" with formula "<formula>"
