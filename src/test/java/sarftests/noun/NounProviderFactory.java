@@ -3,6 +3,9 @@ package sarftests.noun;
 import com.google.inject.Inject;
 import sarftests.RootType;
 import sarftests.noun.tri.unaugmented.*;
+import sarftests.noun.tri.unaugmented.Gerund.GerundNounProvider;
+import sarftests.noun.tri.unaugmented.Gerund.MeemGerundNounProvider;
+import sarftests.noun.tri.unaugmented.Gerund.NomenGerundNounProvider;
 
 public class NounProviderFactory {
     private final ActiveParticipleNounProvider activeParticipleNounProvider;
@@ -14,6 +17,7 @@ public class NounProviderFactory {
     private final ElativeNounProvider elativeNounProvider;
     private final GerundNounProvider gerundNounProvider;
     private final MeemGerundNounProvider meemGerundNounProvider;
+    private final NomenGerundNounProvider nomenGerundNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
@@ -24,7 +28,7 @@ public class NounProviderFactory {
             , AssimilateNounProvider assimilateNounProvider
             , ElativeNounProvider elativeNounProvider
             , GerundNounProvider gerundNounProvider
-            , MeemGerundNounProvider meemGerundNounProvider){
+            , MeemGerundNounProvider meemGerundNounProvider, NomenGerundNounProvider nomenGerundNounProvider){
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -34,6 +38,7 @@ public class NounProviderFactory {
         this.elativeNounProvider = elativeNounProvider;
         this.gerundNounProvider = gerundNounProvider;
         this.meemGerundNounProvider = meemGerundNounProvider;
+        this.nomenGerundNounProvider = nomenGerundNounProvider;
     }
 
     INounProvider create(RootType rootType, NounType nounType){
@@ -63,6 +68,8 @@ public class NounProviderFactory {
                 return gerundNounProvider;
             case MeemGerund:
                 return meemGerundNounProvider;
+            case NomenGerund:
+                return nomenGerundNounProvider;
         }
         return null;
     }

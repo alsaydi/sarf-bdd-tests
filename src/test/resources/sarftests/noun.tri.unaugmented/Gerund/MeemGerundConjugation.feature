@@ -1,6 +1,6 @@
 Feature: تصريف المصدر  الميمي من الفعل الثلاثي المجرد
 
-  Scenario Outline: unaugmented trilateral gerund adjectives
+  Scenario Outline: unaugmented trilateral meem gerund
     Given an unaugmented verb
     When the derived noun is "MeemGerund" and the root type is "TrilateralUnaugmented"
     Then singular masculine nouns of the verb "<verb>" in conjugation "<conjugation>" are nominative "<m_single_n>" and accusative "<m_single_a>" and genitive "<m_single_g>" with formula "<formula>"

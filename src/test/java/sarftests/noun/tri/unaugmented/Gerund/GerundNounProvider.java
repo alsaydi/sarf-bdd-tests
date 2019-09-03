@@ -1,4 +1,4 @@
-package sarftests.noun.tri.unaugmented;
+package sarftests.noun.tri.unaugmented.Gerund;
 
 import com.google.inject.Inject;
 import sarf.gerund.modifier.trilateral.unaugmented.standard.UnaugmentedTrilateralStandardGerundModifier;
