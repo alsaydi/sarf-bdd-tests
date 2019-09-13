@@ -4,10 +4,14 @@ import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import sarf.AugmentationFormula;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.verb.trilateral.augmented.AugmentedPresentVerb;
+import sarf.verb.trilateral.augmented.AugmentedTrilateralRoot;
 import sarf.verb.trilateral.augmented.active.present.AugmentedActivePresentConjugator;
+import sarf.verb.trilateral.augmented.imperative.AugmentedImperativeConjugatorFactory;
+import sarf.verb.trilateral.augmented.imperative.AugmentedImperativeVerb;
 import sarf.verb.trilateral.augmented.modifier.AugmentedTrilateralModifier;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
@@ -130,6 +134,9 @@ public class AugmentedPresentConjugationSteps {
                 case Emphasized:
                     rawVerbs = AugmentedActivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
+                case Imperative:
+                case ImperativeEmphasized:
+                    return getImperativeVerbs(rootLetters, root, augmentationFormula);
                 default:
                     throw new Exception(String.format("%s is invalid", testContext.VerbState));
             }
@@ -146,5 +153,34 @@ public class AugmentedPresentConjugationSteps {
             fail(e.getMessage());
         }
         return null;
+    }
+
+    private List<String> getImperativeVerbs(String rootLetters, AugmentedTrilateralRoot root, AugmentationFormula augmentationFormula) throws Exception {
+        var verbType = SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE;
+        List<AugmentedImperativeVerb> rawVerbs;
+
+        switch (testContext.VerbState) {
+            case Imperative:
+                rawVerbs = AugmentedImperativeConjugatorFactory.getInstance().getNotEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                break;
+            case ImperativeEmphasized:
+                verbType = SystemConstants.EMPHASIZED_IMPERATIVE_TENSE;
+                rawVerbs = AugmentedImperativeConjugatorFactory.getInstance().getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                break;
+            default:
+                throw new Exception(String.format("%s is invalid", testContext.VerbState));
+        }
+        var list = modifier.build(root, common.getKindOfVerb(rootLetters), augmentationFormula.getFormulaNo(), rawVerbs
+                , verbType, true, () -> true).getFinalResult();
+
+        var finalResult = new ArrayList<String>();
+        for(var i : list){
+            if(i == null){
+                finalResult.add("");
+                continue;
+            };
+            finalResult.add(i.toString());
+        }
+        return finalResult;
     }
 }
