@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
+import sarf.verb.trilateral.augmented.AugmentedPresentVerb;
 import sarf.verb.trilateral.augmented.active.present.AugmentedActivePresentConjugator;
 import sarf.verb.trilateral.augmented.modifier.AugmentedTrilateralModifier;
 import sarftests.PronounIndex;
@@ -108,14 +109,24 @@ public class AugmentedPresentConjugationSteps {
         var verbs = getVerbs(verb, formula);
         assertThat(verbs).isNotNull();
         assertThat(verbs.size()).isEqualTo(13);
-        assertThat(verbs.get(pronounIndex.getValue())).isEqualTo(expected).inUnicode();
+        assertThat(verbs.get(pronounIndex.getValue())).isEqualTo(expected);
     }
 
     private List<String> getVerbs(String rootLetters, int formula) {
         try {
             var root = sarfDictionary.getAugmentedTrilateralRoot(rootLetters);
             var augmentationFormula = root.getAugmentationList().stream().filter(af -> af.getFormulaNo() == formula).findFirst().orElseThrow();
-            var rawVerbs = AugmentedActivePresentConjugator .getInstance().getNominativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+            List<AugmentedPresentVerb> rawVerbs;
+            switch (testContext.VerbState){
+                case Nominative:
+                    rawVerbs = AugmentedActivePresentConjugator .getInstance().getNominativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    break;
+                case Accusative:
+                    rawVerbs = AugmentedActivePresentConjugator .getInstance().getAccusativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    break;
+                default:
+                    throw new Exception(String.format("%s is invalid", testContext.VerbState));
+            }
             var list = modifier.build(root, common.getKindOfVerb(rootLetters), augmentationFormula.getFormulaNo(), rawVerbs
             , SystemConstants.PRESENT_TENSE, true, () -> true).getFinalResult();
 
