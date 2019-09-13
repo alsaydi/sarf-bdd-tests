@@ -124,6 +124,9 @@ public class AugmentedPresentConjugationSteps {
                 case Accusative:
                     rawVerbs = AugmentedActivePresentConjugator .getInstance().getAccusativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
+                case Jussive:
+                    rawVerbs = AugmentedActivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    break;
                 default:
                     throw new Exception(String.format("%s is invalid", testContext.VerbState));
             }
