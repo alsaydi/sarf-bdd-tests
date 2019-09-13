@@ -127,6 +127,9 @@ public class AugmentedPresentConjugationSteps {
                 case Jussive:
                     rawVerbs = AugmentedActivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
+                case Emphasized:
+                    rawVerbs = AugmentedActivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    break;
                 default:
                     throw new Exception(String.format("%s is invalid", testContext.VerbState));
             }
