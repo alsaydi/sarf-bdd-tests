@@ -118,7 +118,7 @@ public class AugmentedPresentConjugationSteps {
             root = sarfDictionary.getAugmentedTrilateralRoot(rootLetters);
             var kov = common.getKindOfVerb(rootLetters);
             var augmentationFormula = root.getAugmentationList().stream().filter(f -> f.getFormulaNo() == formula).findFirst().orElseThrow();
-            var verbs = AugmentedPassivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+            var verbs = getRawVerbs(root, augmentationFormula.getFormulaNo(), testContext.VerbState);
             var conjugationResult = modifier.build(root, kov, augmentationFormula.getFormulaNo(), verbs, SystemConstants.PRESENT_TENSE
                     , false, () -> true).getFinalResult();
             var result = new ArrayList<String>();
@@ -133,6 +133,22 @@ public class AugmentedPresentConjugationSteps {
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
+        }
+        return null;
+    }
+
+    private List getRawVerbs(AugmentedTrilateralRoot root, int formulaNo, VerbState verbState) {
+        switch (verbState) {
+            case PassiveNominative:
+                return AugmentedPassivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formulaNo);
+            case PassiveAccusative:
+                return AugmentedPassivePresentConjugator.getInstance().getAccusativeConjugator().createVerbList(root, formulaNo);
+            case PassiveJussive:
+                return AugmentedPassivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, formulaNo);
+            case PassiveEmphasized:
+                return AugmentedPassivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, formulaNo);
+            default:
+                fail("Invalid verb state: " + verbState);
         }
         return null;
     }
