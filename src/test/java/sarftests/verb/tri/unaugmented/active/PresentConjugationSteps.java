@@ -1,11 +1,10 @@
-package sarftests.verb.tri.active;
+package sarftests.verb.tri.unaugmented.active;
 
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarf.SystemConstants;
-import sarf.kov.KovRulesManager;
 import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.active.ActivePresentConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;

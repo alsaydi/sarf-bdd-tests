@@ -1,4 +1,4 @@
-package sarftests.verb.tri;
+package sarftests.verb.tri.unaugmented;
 
 import com.google.inject.Inject;
 import cucumber.api.java.en.Then;

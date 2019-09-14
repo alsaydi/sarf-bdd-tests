@@ -1,4 +1,4 @@
-package sarftests.verb.tri.passive;
+package sarftests.verb.tri.unaugmented.passive;
 
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
@@ -6,7 +6,6 @@ import cucumber.api.java.en.Then;
 import sarf.KindOfVerb;
 import sarf.SystemConstants;
 import sarf.verb.trilateral.unaugmented.ConjugationResult;
-import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
 import sarf.verb.trilateral.unaugmented.passive.PassivePastConjugator;
 import sarftests.PronounIndex;

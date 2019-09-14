@@ -1,4 +1,4 @@
-package sarftests.verb.tri.passive;
+package sarftests.verb.tri.unaugmented.passive;
 
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
