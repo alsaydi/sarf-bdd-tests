@@ -1,5 +1,5 @@
 Feature: unaugmented quadrilateral verb conjugation in jussive state
-# المضارع الرباعي المجزوم المبني للمعلوم
+# المضارع الرباعي المجرد المجزوم المبني للمعلوم
   Scenario Outline: active unaugmented quadrilateral verb present conjugation in jussive state
     Given an unaugmented verb
     When the quadrilateral verb is conjugated in "Jussive" state

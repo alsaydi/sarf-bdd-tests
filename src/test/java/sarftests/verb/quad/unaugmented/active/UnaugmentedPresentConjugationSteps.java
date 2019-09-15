@@ -8,6 +8,7 @@ import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
+import sarf.verb.quadriliteral.unaugmented.UnaugmentedImperativeConjugator;
 import sarf.verb.quadriliteral.unaugmented.active.ActivePresentConjugator;
 import sarf.verb.quadriliteral.unaugmented.active.ActivePresentVerb;
 import sarf.verb.quadriliteral.unaugmented.active.QuadriActivePastConjugator;
@@ -118,6 +119,7 @@ public class UnaugmentedPresentConjugationSteps {
             var root = sarfDictionary.getUnaugmentedQuadrilateralRoot(rootLetters);
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
             List<ActivePresentVerb> verbs = new ArrayList<>();
+            var tense = SystemConstants.PRESENT_TENSE;
             switch (testContext.VerbState) {
                 case Nominative:
                     verbs = ActivePresentConjugator.getInstance().createNominativeVerbList(root);
@@ -131,14 +133,23 @@ public class UnaugmentedPresentConjugationSteps {
                 case Emphasized:
                     verbs = ActivePresentConjugator.getInstance().createEmphasizedVerbList(root);
                     break;
+                case Imperative:
+                    verbs = UnaugmentedImperativeConjugator.getInstance().createVerbList(root);
+                    tense = SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE;
+                    break;
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
             }
 
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, 0, kovRule.getKov(), verbs, SystemConstants.PRESENT_TENSE, true, true)
+            var conjugationResult = QuadrilateralModifier.getInstance().build(root, 0, kovRule.getKov(), verbs
+                    , tense, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();
             for(var v : conjugationResult){
+                if(v == null){
+                    result.add("");
+                    continue;
+                }
                 result.add(v.toString());
             }
             return result;
