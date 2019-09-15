@@ -3,6 +3,7 @@ package sarftests.noun;
 import com.google.inject.Inject;
 import sarftests.RootType;
 import sarftests.noun.tri.augmented.AugmentedActiveParticipleNounProvider;
+import sarftests.noun.tri.augmented.AugmentedPassiveParticipleNounProvider;
 import sarftests.noun.tri.unaugmented.*;
 import sarftests.noun.tri.unaugmented.Gerund.GerundNounProvider;
 import sarftests.noun.tri.unaugmented.Gerund.MeemGerundNounProvider;
@@ -23,6 +24,7 @@ public class NounProviderFactory {
     private final QualityGerundNounProvider qualityGerundNounProvider;
 
     private final AugmentedActiveParticipleNounProvider augmentedActiveParticipleNounProvider;
+    private final AugmentedPassiveParticipleNounProvider augmentedPassiveParticipleNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
@@ -33,7 +35,10 @@ public class NounProviderFactory {
             , AssimilateNounProvider assimilateNounProvider
             , ElativeNounProvider elativeNounProvider
             , GerundNounProvider gerundNounProvider
-            , MeemGerundNounProvider meemGerundNounProvider, NomenGerundNounProvider nomenGerundNounProvider, QualityGerundNounProvider qualityGerundNounProvider, AugmentedActiveParticipleNounProvider augmentedActiveParticipleNounProvider){
+            , MeemGerundNounProvider meemGerundNounProvider, NomenGerundNounProvider nomenGerundNounProvider
+            , QualityGerundNounProvider qualityGerundNounProvider
+            , AugmentedActiveParticipleNounProvider augmentedActiveParticipleNounProvider
+            , AugmentedPassiveParticipleNounProvider augmentedPassiveParticipleNounProvider){
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -46,6 +51,7 @@ public class NounProviderFactory {
         this.nomenGerundNounProvider = nomenGerundNounProvider;
         this.qualityGerundNounProvider = qualityGerundNounProvider;
         this.augmentedActiveParticipleNounProvider = augmentedActiveParticipleNounProvider;
+        this.augmentedPassiveParticipleNounProvider = augmentedPassiveParticipleNounProvider;
     }
 
     public INounProvider create(RootType rootType, NounType nounType){
@@ -90,6 +96,8 @@ public class NounProviderFactory {
         switch (nounType){
             case ActiveParticiple:
                 return augmentedActiveParticipleNounProvider;
+            case PassiveParticiple:
+                return augmentedPassiveParticipleNounProvider;
         }
         return null;
     }
