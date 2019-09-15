@@ -6,6 +6,7 @@ import sarftests.noun.tri.augmented.AugmentedActiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedPassiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedTimeAndPlaceNounProvider;
 import sarftests.noun.tri.augmented.gerund.AugmentedGerundNounProvider;
+import sarftests.noun.tri.augmented.gerund.AugmentedNomenGerundNounProvider;
 import sarftests.noun.tri.unaugmented.*;
 import sarftests.noun.tri.unaugmented.gerund.GerundNounProvider;
 import sarftests.noun.tri.unaugmented.gerund.MeemGerundNounProvider;
@@ -29,6 +30,7 @@ public class NounProviderFactory {
     private final AugmentedPassiveParticipleNounProvider augmentedPassiveParticipleNounProvider;
     private final AugmentedTimeAndPlaceNounProvider augmentedTimeAndPlaceNounProvider;
     private final AugmentedGerundNounProvider augmentedGerundNounProvider;
+    private final AugmentedNomenGerundNounProvider augmentedNomenGerundNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
@@ -44,7 +46,8 @@ public class NounProviderFactory {
             , AugmentedActiveParticipleNounProvider augmentedActiveParticipleNounProvider
             , AugmentedPassiveParticipleNounProvider augmentedPassiveParticipleNounProvider
             , AugmentedTimeAndPlaceNounProvider augmentedTimeAndPlaceNounProvider
-            , AugmentedGerundNounProvider augmentedGerundNounProvider){
+            , AugmentedGerundNounProvider augmentedGerundNounProvider
+            , AugmentedNomenGerundNounProvider augmentedNomenGerundNounProvider){
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -60,6 +63,7 @@ public class NounProviderFactory {
         this.augmentedPassiveParticipleNounProvider = augmentedPassiveParticipleNounProvider;
         this.augmentedTimeAndPlaceNounProvider = augmentedTimeAndPlaceNounProvider;
         this.augmentedGerundNounProvider = augmentedGerundNounProvider;
+        this.augmentedNomenGerundNounProvider = augmentedNomenGerundNounProvider;
     }
 
     public INounProvider create(RootType rootType, NounType nounType){
@@ -110,6 +114,8 @@ public class NounProviderFactory {
                 return augmentedTimeAndPlaceNounProvider;
             case Gerund:
                 return augmentedGerundNounProvider;
+            case NomenGerund:
+                return augmentedNomenGerundNounProvider;
         }
         return null;
     }
