@@ -125,13 +125,13 @@ public class UnaugmentedPresentConjugationSteps {
                     verbs = PassivePresentConjugator.getInstance().createNominativeVerbList(root);
                     break;
                 case PassiveAccusative:
-                    verbs = ActivePresentConjugator.getInstance().createAccusativeVerbList(root);
+                    verbs = PassivePresentConjugator.getInstance().createAccusativeVerbList(root);
                     break;
                 case PassiveJussive:
-                    verbs = ActivePresentConjugator.getInstance().createJussiveVerbList(root);
+                    verbs = PassivePresentConjugator.getInstance().createJussiveVerbList(root);
                     break;
                 case PassiveEmphasized:
-                    verbs = ActivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+                    verbs = PassivePresentConjugator.getInstance().createEmphasizedVerbList(root);
                     break;
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
