@@ -1,23 +1,23 @@
-package sarftests.noun.tri.unaugmented.Gerund;
+package sarftests.noun.tri.unaugmented.gerund;
 
 import com.google.inject.Inject;
-import sarf.gerund.modifier.trilateral.unaugmented.nomen.TrilateralUnaugmentedNomenModifier;
-import sarf.gerund.trilateral.unaugmented.TrilateralUnaugmentedNomenGerundConjugator;
+import sarf.gerund.modifier.trilateral.unaugmented.meem.TrilateralUnaugmentedMeemModifier;
+import sarf.gerund.trilateral.unaugmented.meem.MeemGerundConjugator;
 import sarftests.noun.INounProvider;
 import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NomenGerundNounProvider implements INounProvider {
+public class MeemGerundNounProvider implements INounProvider {
 
     private final Common common;
-    private final TrilateralUnaugmentedNomenGerundConjugator conjugator;
-    private final TrilateralUnaugmentedNomenModifier modifier;
+    private final MeemGerundConjugator conjugator;
+    private final TrilateralUnaugmentedMeemModifier modifier;
 
     @Inject
-    public NomenGerundNounProvider(Common common, TrilateralUnaugmentedNomenGerundConjugator conjugator
-    , TrilateralUnaugmentedNomenModifier modifier){
+    public MeemGerundNounProvider(Common common, MeemGerundConjugator conjugator, TrilateralUnaugmentedMeemModifier modifier){
+
         this.common = common;
         this.conjugator = conjugator;
         this.modifier = modifier;
@@ -27,8 +27,14 @@ public class NomenGerundNounProvider implements INounProvider {
     public List<String> getNouns(String rootLetters, String formula, int conjugation) {
         var root = common.createRoot(rootLetters, conjugation);
         var kov = common.getKindOfVerb(rootLetters);
+        try {
+            var obj = conjugator.getAppliedFormulaList(root);
+            if(obj == null) return new ArrayList<>();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         var rawNouns = conjugator.createGerundList(root, formula);
-        var conjugationResult = modifier.build(root, kov, rawNouns, formula).getFinalResult();
+        var conjugationResult =  modifier.build(root, kov, rawNouns, formula).getFinalResult();
         var result = new ArrayList<String>();
         for (var g : conjugationResult) {
             if (g == null) {

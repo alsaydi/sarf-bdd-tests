@@ -6,10 +6,10 @@ import sarftests.noun.tri.augmented.AugmentedActiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedPassiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedTimeAndPlaceNounProvider;
 import sarftests.noun.tri.unaugmented.*;
-import sarftests.noun.tri.unaugmented.Gerund.GerundNounProvider;
-import sarftests.noun.tri.unaugmented.Gerund.MeemGerundNounProvider;
-import sarftests.noun.tri.unaugmented.Gerund.NomenGerundNounProvider;
-import sarftests.noun.tri.unaugmented.Gerund.QualityGerundNounProvider;
+import sarftests.noun.tri.unaugmented.gerund.GerundNounProvider;
+import sarftests.noun.tri.unaugmented.gerund.MeemGerundNounProvider;
+import sarftests.noun.tri.unaugmented.gerund.NomenGerundNounProvider;
+import sarftests.noun.tri.unaugmented.gerund.QualityGerundNounProvider;
 
 public class NounProviderFactory {
     private final ActiveParticipleNounProvider activeParticipleNounProvider;

@@ -1,23 +1,22 @@
-package sarftests.noun.tri.unaugmented.Gerund;
+package sarftests.noun.tri.unaugmented.gerund;
 
 import com.google.inject.Inject;
-import sarf.gerund.modifier.trilateral.unaugmented.standard.UnaugmentedTrilateralStandardGerundModifier;
-import sarf.gerund.trilateral.unaugmented.TrilateralUnaugmentedGerundConjugator;
+import sarf.gerund.modifier.trilateral.unaugmented.quality.TrilateralUnaugmentedQualityModifier;
+import sarf.gerund.trilateral.unaugmented.QualityGerundConjugator;
 import sarftests.noun.INounProvider;
 import sarftests.verb.tri.Common;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GerundNounProvider implements INounProvider {
+public class QualityGerundNounProvider implements INounProvider {
 
     private final Common common;
-    private final TrilateralUnaugmentedGerundConjugator conjugator;
-    private final UnaugmentedTrilateralStandardGerundModifier modifier;
+    private final QualityGerundConjugator conjugator;
+    private final TrilateralUnaugmentedQualityModifier modifier;
 
     @Inject
-    public GerundNounProvider(Common common, TrilateralUnaugmentedGerundConjugator conjugator
-            , UnaugmentedTrilateralStandardGerundModifier modifier) {
+    public QualityGerundNounProvider(Common common, QualityGerundConjugator conjugator, TrilateralUnaugmentedQualityModifier modifier){
         this.common = common;
         this.conjugator = conjugator;
         this.modifier = modifier;
@@ -27,8 +26,8 @@ public class GerundNounProvider implements INounProvider {
     public List<String> getNouns(String rootLetters, String formula, int conjugation) {
         var root = common.createRoot(rootLetters, conjugation);
         var kov = common.getKindOfVerb(rootLetters);
-        var rawNouns = conjugator.createGerundList(root, formula);
-        var conjugationResult = modifier.build(root, kov, rawNouns, formula).getFinalResult();
+        var rawNouns = conjugator.createGerundList(root, null);
+        var conjugationResult = modifier.build(root, kov, rawNouns, null).getFinalResult();
         var result = new ArrayList<String>();
         for (var g : conjugationResult) {
             if (g == null) {
