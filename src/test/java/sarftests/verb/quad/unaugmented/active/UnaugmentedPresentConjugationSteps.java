@@ -9,6 +9,7 @@ import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
 import sarf.verb.quadriliteral.unaugmented.active.ActivePresentConjugator;
+import sarf.verb.quadriliteral.unaugmented.active.ActivePresentVerb;
 import sarf.verb.quadriliteral.unaugmented.active.QuadriActivePastConjugator;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
@@ -116,7 +117,23 @@ public class UnaugmentedPresentConjugationSteps {
         try {
             var root = sarfDictionary.getUnaugmentedQuadrilateralRoot(rootLetters);
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
-            var verbs = ActivePresentConjugator.getInstance().createNominativeVerbList(root);
+            List<ActivePresentVerb> verbs = new ArrayList<>();
+            switch (testContext.VerbState) {
+                case Nominative:
+                    verbs = ActivePresentConjugator.getInstance().createNominativeVerbList(root);
+                    break;
+                case Accusative:
+                    verbs = ActivePresentConjugator.getInstance().createAccusativeVerbList(root);
+                    break;
+                case Jussive:
+                    verbs = ActivePresentConjugator.getInstance().createJussiveVerbList(root);
+                    break;
+                case Emphasized:
+                    verbs = ActivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+                    break;
+                default:
+                    fail("Invalid verb state: " + testContext.VerbState);
+            }
 
             var conjugationResult = QuadrilateralModifier.getInstance().build(root, 0, kovRule.getKov(), verbs, SystemConstants.PRESENT_TENSE, true, true)
                     .getFinalResult();
