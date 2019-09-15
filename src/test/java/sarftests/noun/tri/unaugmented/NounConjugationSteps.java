@@ -1,4 +1,4 @@
-package sarftests.noun;
+package sarftests.noun.tri.unaugmented;
 
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
@@ -6,6 +6,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarftests.RootType;
 import sarftests.TestContext;
+import sarftests.noun.NounIndex;
+import sarftests.noun.NounProviderFactory;
+import sarftests.noun.NounType;
 
 import java.util.List;
 

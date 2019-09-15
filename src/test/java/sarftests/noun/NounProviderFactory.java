@@ -44,7 +44,7 @@ public class NounProviderFactory {
         this.qualityGerundNounProvider = qualityGerundNounProvider;
     }
 
-    INounProvider create(RootType rootType, NounType nounType){
+    public INounProvider create(RootType rootType, NounType nounType){
         if(rootType == RootType.TrilateralUnaugmented){
             return createTrilateralUnaugmented(nounType);
         }

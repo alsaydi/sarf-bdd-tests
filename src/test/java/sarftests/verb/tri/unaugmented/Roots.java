@@ -92,7 +92,6 @@ public class Roots {
                 .getInstance()
                 .build(root, kov, conjugations, SystemConstants.PRESENT_TENSE, true);
         return conjResult.getFinalResult().get(7).toString();
-
     }
 
     private static List<String> createEmptyList() {
