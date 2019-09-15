@@ -2,6 +2,7 @@ package sarftests.noun;
 
 import com.google.inject.Inject;
 import sarftests.RootType;
+import sarftests.noun.tri.augmented.AugmentedActiveParticipleNounProvider;
 import sarftests.noun.tri.unaugmented.*;
 import sarftests.noun.tri.unaugmented.Gerund.GerundNounProvider;
 import sarftests.noun.tri.unaugmented.Gerund.MeemGerundNounProvider;
@@ -21,6 +22,8 @@ public class NounProviderFactory {
     private final NomenGerundNounProvider nomenGerundNounProvider;
     private final QualityGerundNounProvider qualityGerundNounProvider;
 
+    private final AugmentedActiveParticipleNounProvider augmentedActiveParticipleNounProvider;
+
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
             , PassiveParticipleNounProvider passiveParticipleNounProvider
@@ -30,7 +33,7 @@ public class NounProviderFactory {
             , AssimilateNounProvider assimilateNounProvider
             , ElativeNounProvider elativeNounProvider
             , GerundNounProvider gerundNounProvider
-            , MeemGerundNounProvider meemGerundNounProvider, NomenGerundNounProvider nomenGerundNounProvider, QualityGerundNounProvider qualityGerundNounProvider){
+            , MeemGerundNounProvider meemGerundNounProvider, NomenGerundNounProvider nomenGerundNounProvider, QualityGerundNounProvider qualityGerundNounProvider, AugmentedActiveParticipleNounProvider augmentedActiveParticipleNounProvider){
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -42,11 +45,15 @@ public class NounProviderFactory {
         this.meemGerundNounProvider = meemGerundNounProvider;
         this.nomenGerundNounProvider = nomenGerundNounProvider;
         this.qualityGerundNounProvider = qualityGerundNounProvider;
+        this.augmentedActiveParticipleNounProvider = augmentedActiveParticipleNounProvider;
     }
 
     public INounProvider create(RootType rootType, NounType nounType){
         if(rootType == RootType.TrilateralUnaugmented){
             return createTrilateralUnaugmented(nounType);
+        }
+        if(rootType == RootType.TrilateralAugmented){
+            return createTrilateralAugmented(nounType);
         }
         return null;
     }
@@ -75,6 +82,14 @@ public class NounProviderFactory {
                 return nomenGerundNounProvider;
             case QualityGerund:
                 return qualityGerundNounProvider;
+        }
+        return null;
+    }
+
+    private INounProvider createTrilateralAugmented(NounType nounType) {
+        switch (nounType){
+            case ActiveParticiple:
+                return augmentedActiveParticipleNounProvider;
         }
         return null;
     }
