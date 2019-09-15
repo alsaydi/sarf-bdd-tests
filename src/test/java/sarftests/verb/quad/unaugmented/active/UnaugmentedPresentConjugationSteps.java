@@ -137,6 +137,10 @@ public class UnaugmentedPresentConjugationSteps {
                     verbs = UnaugmentedImperativeConjugator.getInstance().createVerbList(root);
                     tense = SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE;
                     break;
+                case ImperativeEmphasized:
+                    verbs = UnaugmentedImperativeConjugator.getInstance().createEmphasizedVerbList(root);
+                    tense = SystemConstants.EMPHASIZED_IMPERATIVE_TENSE;
+                    break;
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
             }
