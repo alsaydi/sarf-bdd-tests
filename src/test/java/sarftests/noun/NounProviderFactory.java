@@ -3,6 +3,7 @@ package sarftests.noun;
 import com.google.inject.Inject;
 import sarftests.RootType;
 import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedActiveParticipleNounProvider;
+import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedPassiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedActiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedPassiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedTimeAndPlaceNounProvider;
@@ -36,6 +37,7 @@ public class NounProviderFactory {
     private final AugmentedMeemGerundNounProvider augmentedMeemGerundNounProvider;
 
     private final QuadrilateralUnaugmentedActiveParticipleNounProvider quadrilateralUnaugmentedActiveParticipleNounProvider;
+    private final QuadrilateralUnaugmentedPassiveParticipleNounProvider quadrilateralUnaugmentedPassiveParticipleNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
@@ -54,7 +56,8 @@ public class NounProviderFactory {
             , AugmentedGerundNounProvider augmentedGerundNounProvider
             , AugmentedNomenGerundNounProvider augmentedNomenGerundNounProvider
             , AugmentedMeemGerundNounProvider augmentedMeemGerundNounProvider
-            , QuadrilateralUnaugmentedActiveParticipleNounProvider quadrilateralUnaugmentedActiveParticipleNounProvider){
+            , QuadrilateralUnaugmentedActiveParticipleNounProvider quadrilateralUnaugmentedActiveParticipleNounProvider
+            , QuadrilateralUnaugmentedPassiveParticipleNounProvider quadrilateralUnaugmentedPassiveParticipleNounProvider) {
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -73,27 +76,28 @@ public class NounProviderFactory {
         this.augmentedNomenGerundNounProvider = augmentedNomenGerundNounProvider;
         this.augmentedMeemGerundNounProvider = augmentedMeemGerundNounProvider;
         this.quadrilateralUnaugmentedActiveParticipleNounProvider = quadrilateralUnaugmentedActiveParticipleNounProvider;
+        this.quadrilateralUnaugmentedPassiveParticipleNounProvider = quadrilateralUnaugmentedPassiveParticipleNounProvider;
     }
 
-    public INounProvider create(RootType rootType, NounType nounType){
-        if(rootType == RootType.TrilateralUnaugmented){
+    public INounProvider create(RootType rootType, NounType nounType) {
+        if (rootType == RootType.TrilateralUnaugmented) {
             return createTrilateralUnaugmented(nounType);
         }
-        if(rootType == RootType.TrilateralAugmented){
+        if (rootType == RootType.TrilateralAugmented) {
             return createTrilateralAugmented(nounType);
         }
-        if(rootType == RootType.QuadrilateralUnaugmented){
+        if (rootType == RootType.QuadrilateralUnaugmented) {
             return createQuadrilateralUnaugmented(nounType);
         }
         return null;
     }
 
     private INounProvider createTrilateralUnaugmented(NounType nounType) {
-        switch (nounType){
+        switch (nounType) {
             case ActiveParticiple:
                 return activeParticipleNounProvider;
             case PassiveParticiple:
-                return  passiveParticipleNounProvider;
+                return passiveParticipleNounProvider;
             case EmphasizedActiveParticiple:
                 return emphasizedActiveParticipleNounProvider;
             case TimeAndPlace:
@@ -117,7 +121,7 @@ public class NounProviderFactory {
     }
 
     private INounProvider createTrilateralAugmented(NounType nounType) {
-        switch (nounType){
+        switch (nounType) {
             case ActiveParticiple:
                 return augmentedActiveParticipleNounProvider;
             case PassiveParticiple:
@@ -135,8 +139,11 @@ public class NounProviderFactory {
     }
 
     private INounProvider createQuadrilateralUnaugmented(NounType nounType) {
-        switch (nounType){
-            case ActiveParticiple: return quadrilateralUnaugmentedActiveParticipleNounProvider;
+        switch (nounType) {
+            case ActiveParticiple:
+                return quadrilateralUnaugmentedActiveParticipleNounProvider;
+            case PassiveParticiple:
+                return quadrilateralUnaugmentedPassiveParticipleNounProvider;
         }
         return null;
     }
