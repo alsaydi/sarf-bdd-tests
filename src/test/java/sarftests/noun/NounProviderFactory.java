@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import sarftests.RootType;
 import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedActiveParticipleNounProvider;
 import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedPassiveParticipleNounProvider;
+import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedTimeAndPlaceNounProvider;
 import sarftests.noun.tri.augmented.AugmentedActiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedPassiveParticipleNounProvider;
 import sarftests.noun.tri.augmented.AugmentedTimeAndPlaceNounProvider;
@@ -38,6 +39,7 @@ public class NounProviderFactory {
 
     private final QuadrilateralUnaugmentedActiveParticipleNounProvider quadrilateralUnaugmentedActiveParticipleNounProvider;
     private final QuadrilateralUnaugmentedPassiveParticipleNounProvider quadrilateralUnaugmentedPassiveParticipleNounProvider;
+    private final QuadrilateralUnaugmentedTimeAndPlaceNounProvider quadrilateralUnaugmentedTimeAndPlaceNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
@@ -57,7 +59,8 @@ public class NounProviderFactory {
             , AugmentedNomenGerundNounProvider augmentedNomenGerundNounProvider
             , AugmentedMeemGerundNounProvider augmentedMeemGerundNounProvider
             , QuadrilateralUnaugmentedActiveParticipleNounProvider quadrilateralUnaugmentedActiveParticipleNounProvider
-            , QuadrilateralUnaugmentedPassiveParticipleNounProvider quadrilateralUnaugmentedPassiveParticipleNounProvider) {
+            , QuadrilateralUnaugmentedPassiveParticipleNounProvider quadrilateralUnaugmentedPassiveParticipleNounProvider
+            , QuadrilateralUnaugmentedTimeAndPlaceNounProvider quadrilateralUnaugmentedTimeAndPlaceNounProvider) {
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -77,6 +80,7 @@ public class NounProviderFactory {
         this.augmentedMeemGerundNounProvider = augmentedMeemGerundNounProvider;
         this.quadrilateralUnaugmentedActiveParticipleNounProvider = quadrilateralUnaugmentedActiveParticipleNounProvider;
         this.quadrilateralUnaugmentedPassiveParticipleNounProvider = quadrilateralUnaugmentedPassiveParticipleNounProvider;
+        this.quadrilateralUnaugmentedTimeAndPlaceNounProvider = quadrilateralUnaugmentedTimeAndPlaceNounProvider;
     }
 
     public INounProvider create(RootType rootType, NounType nounType) {
@@ -144,6 +148,8 @@ public class NounProviderFactory {
                 return quadrilateralUnaugmentedActiveParticipleNounProvider;
             case PassiveParticiple:
                 return quadrilateralUnaugmentedPassiveParticipleNounProvider;
+            case TimeAndPlace:
+                return quadrilateralUnaugmentedTimeAndPlaceNounProvider;
         }
         return null;
     }
