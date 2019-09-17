@@ -1,4 +1,4 @@
-Feature: augmented quadrilateral verb conjugation
+Feature: augmented quadrilateral active past verb conjugation
 
   Scenario Outline: active augmented quadrilateral verb past conjugation
     Given an augmented verb

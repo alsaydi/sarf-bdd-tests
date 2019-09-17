@@ -18,7 +18,6 @@ Feature: augmented trilateral past passive verb conjugation
     And the feminine plural third person past conjugation of the passive verb "<verb>" and formula of "<formula>" is "<f_plural_third>"
     Examples:
       | verb | formula | single_first  | plural_first   | m_single_second | f_single_second | m_dual_second    | m_plural_second | f_plural_second  | m_single_third | f_single_third | m_dual_third | f_dual_third   | m_plural_third | f_plural_third |
-
       | ءتي  | 2       | أُتِّيتُ      | أُتِّينَا      | أُتِّيتَ        | أُتِّيتِ        | أُتِّيتُمَا      | أُتِّيتُمْ      | أُتِّيتُنَّ      | أُتِّيَ        | أُتِّيَتْ      | أُتِّيَا     | أُتِّيَتَا     | أُتُّوا        | أُتِّينَ       |
       | ءتي  | 8       |               |                |                 |                 |                  |                 |                  | تُؤُتِّيَ      | تُؤُتِّيَتْ    |              |                |                |                |
       | ءتي  | 9       | اسْتُؤْتِيتُ  | اسْتُؤْتِينَا  | اسْتُؤْتِيتَ    | اسْتُؤْتِيتِ    | اسْتُؤْتِيتُمَا  | اسْتُؤْتِيتُمْ  | اسْتُؤْتِيتُنَّ  | اسْتُؤْتِيَ    | اسْتُؤْتِيَتْ  | اسْتُؤْتِيَا | اسْتُؤْتِيَتَا | اسْتُؤْتُوا    | اسْتُؤْتِينَ   |
