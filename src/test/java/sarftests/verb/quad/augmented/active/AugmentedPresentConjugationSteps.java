@@ -8,6 +8,7 @@ import sarf.AugmentationFormula;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
+import sarf.verb.quadriliteral.augmented.AugmentedPresentVerb;
 import sarf.verb.quadriliteral.augmented.active.past.QuadrilateralAugmentedActivePastConjugator;
 import sarf.verb.quadriliteral.augmented.active.present.AugmentedActivePresentConjugator;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
@@ -119,7 +120,24 @@ public class AugmentedPresentConjugationSteps {
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
             var formula = (AugmentationFormula) root.getAugmentationList().stream().filter(f -> ((AugmentationFormula) f).getFormulaNo() == formulaNo).findFirst().orElseThrow();
 
-            var verbs = AugmentedActivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
+            List<AugmentedPresentVerb> verbs = null;
+            switch (testContext.VerbState) {
+                case Nominative:
+                    verbs = AugmentedActivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
+                    break;
+                case Accusative:
+                    verbs = AugmentedActivePresentConjugator.getInstance().getAccusativeConjugator().createVerbList(root, formula.getFormulaNo());
+                    break;
+                case Jussive:
+                    verbs = AugmentedActivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, formula.getFormulaNo());
+                    break;
+                case Emphasized:
+                    verbs = AugmentedActivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, formula.getFormulaNo());
+                    break;
+                default:
+                    fail("Invalid verb state: " + testContext.VerbState);
+                    return null;
+            }
             var conjugationResult = QuadrilateralModifier.getInstance().build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PRESENT_TENSE, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();
