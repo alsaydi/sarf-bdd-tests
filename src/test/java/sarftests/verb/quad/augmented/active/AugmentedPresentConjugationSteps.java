@@ -120,7 +120,7 @@ public class AugmentedPresentConjugationSteps {
             var formula = (AugmentationFormula) root.getAugmentationList().stream().filter(f -> ((AugmentationFormula) f).getFormulaNo() == formulaNo).findFirst().orElseThrow();
 
             var verbs = AugmentedActivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PAST_TENSE, true, true)
+            var conjugationResult = QuadrilateralModifier.getInstance().build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PRESENT_TENSE, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();
             for (var v : conjugationResult) {
