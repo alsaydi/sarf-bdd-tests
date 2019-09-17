@@ -1,6 +1,6 @@
 Feature: augmented quadrilateral verb conjugation in present emphasized state
 # المضارع المؤكد المبني للمعلوم من الرباعي المزيد
-  Scenario Outline: active augmented quadrilateral verb past conjugation in jussive emphasized state
+  Scenario Outline: active augmented quadrilateral verb past conjugation in emphasized state
     Given an augmented verb
     When the augmented quadrilateral verb is actively conjugated in "Emphasized" state
     Then the first person singular conjugation of the active present quad verb "<verb>" and formula of "<formula>" is "<single_first>"

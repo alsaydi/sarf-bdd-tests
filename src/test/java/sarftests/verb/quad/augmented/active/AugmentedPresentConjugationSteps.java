@@ -5,12 +5,16 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarf.AugmentationFormula;
+import sarf.KindOfVerb;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
+import sarf.verb.quadriliteral.QuadrilateralRoot;
 import sarf.verb.quadriliteral.augmented.AugmentedPresentVerb;
+import sarf.verb.quadriliteral.augmented.AugmentedQuadrilateralRoot;
 import sarf.verb.quadriliteral.augmented.active.past.QuadrilateralAugmentedActivePastConjugator;
 import sarf.verb.quadriliteral.augmented.active.present.AugmentedActivePresentConjugator;
+import sarf.verb.quadriliteral.augmented.imperative.AugmentedImperativeConjugator;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
@@ -134,6 +138,9 @@ public class AugmentedPresentConjugationSteps {
                 case Emphasized:
                     verbs = AugmentedActivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
+                case Imperative:
+                case ImperativeEmphasized:
+                    return getImperativeVerbs(root, kovRule.getKov(), formula.getFormulaNo());
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
                     return null;
@@ -152,4 +159,23 @@ public class AugmentedPresentConjugationSteps {
         return null;
     }
 
+    private List<String> getImperativeVerbs(AugmentedQuadrilateralRoot root, KindOfVerb kov,  int formulaNo) {
+        var verbs = testContext.VerbState == VerbState.Imperative ?
+                AugmentedImperativeConjugator.getInstance().getNotEmphsizedConjugator().createVerbList(root, formulaNo)
+                : AugmentedImperativeConjugator.getInstance().getEmphsizedConjugator().createVerbList(root, formulaNo);
+        var conjugationResult = QuadrilateralModifier.getInstance().build(root, formulaNo, kov, verbs
+                , testContext.VerbState == VerbState.Imperative ? SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE : SystemConstants.EMPHASIZED_IMPERATIVE_TENSE
+                , true
+                , true)
+                .getFinalResult();
+        var result = new ArrayList<String>();
+        for (var v : conjugationResult) {
+            if(v == null){
+                result.add("");
+                continue;
+            }
+            result.add(v.toString());
+        }
+        return  result;
+    }
 }
