@@ -5,6 +5,9 @@ import sarftests.RootType;
 import sarftests.noun.quad.augmented.QuadrilateralAugmentedActiveParticipleNounProvider;
 import sarftests.noun.quad.augmented.QuadrilateralAugmentedPassiveParticipleNounProvider;
 import sarftests.noun.quad.augmented.QuadrilateralAugmentedTimeAndPlaceNounProvider;
+import sarftests.noun.quad.augmented.gerund.QuadrilateralAugmentedGerundNounProvider;
+import sarftests.noun.quad.augmented.gerund.QuadrilateralAugmentedMeemGerundNounProvider;
+import sarftests.noun.quad.augmented.gerund.QuadrilateralAugmentedNomenGerundNounProvider;
 import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedActiveParticipleNounProvider;
 import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedPassiveParticipleNounProvider;
 import sarftests.noun.quad.unaugmented.QuadrilateralUnaugmentedTimeAndPlaceNounProvider;
@@ -53,6 +56,9 @@ public class NounProviderFactory {
     private final QuadrilateralAugmentedActiveParticipleNounProvider quadrilateralAugmentedActiveParticipleNounProvider;
     private final QuadrilateralAugmentedPassiveParticipleNounProvider quadrilateralAugmentedPassiveParticipleNounProvider;
     private final QuadrilateralAugmentedTimeAndPlaceNounProvider quadrilateralAugmentedTimeAndPlaceNounProvider;
+    private final QuadrilateralAugmentedGerundNounProvider quadrilateralAugmentedGerundNounProvider;
+    private final QuadrilateralAugmentedMeemGerundNounProvider quadrilateralAugmentedMeemGerundNounProvider;
+    private final QuadrilateralAugmentedNomenGerundNounProvider quadrilateralAugmentedNomenGerundNounProvider;
 
     @Inject
     public NounProviderFactory(ActiveParticipleNounProvider activeParticipleNounProvider
@@ -79,7 +85,10 @@ public class NounProviderFactory {
             , QuadrilateralUnaugmentedMeemGerundNounProvider quadrilateralUnaugmentedMeemGerundNounProvider
             , QuadrilateralAugmentedActiveParticipleNounProvider quadrilateralAugmentedActiveParticipleNounProvider
             , QuadrilateralAugmentedPassiveParticipleNounProvider quadrilateralAugmentedPassiveParticipleNounProvider
-            , QuadrilateralAugmentedTimeAndPlaceNounProvider quadrilateralAugmentedTimeAndPlaceNounProvider) {
+            , QuadrilateralAugmentedTimeAndPlaceNounProvider quadrilateralAugmentedTimeAndPlaceNounProvider
+            , QuadrilateralAugmentedGerundNounProvider quadrilateralAugmentedGerundNounProvider
+            , QuadrilateralAugmentedMeemGerundNounProvider quadrilateralAugmentedMeemGerundNounProvider
+            , QuadrilateralAugmentedNomenGerundNounProvider quadrilateralAugmentedNomenGerundNounProvider) {
         this.activeParticipleNounProvider = activeParticipleNounProvider;
         this.passiveParticipleNounProvider = passiveParticipleNounProvider;
         this.emphasizedActiveParticipleNounProvider = emphasizedActiveParticipleNounProvider;
@@ -106,6 +115,9 @@ public class NounProviderFactory {
         this.quadrilateralAugmentedActiveParticipleNounProvider = quadrilateralAugmentedActiveParticipleNounProvider;
         this.quadrilateralAugmentedPassiveParticipleNounProvider = quadrilateralAugmentedPassiveParticipleNounProvider;
         this.quadrilateralAugmentedTimeAndPlaceNounProvider = quadrilateralAugmentedTimeAndPlaceNounProvider;
+        this.quadrilateralAugmentedGerundNounProvider = quadrilateralAugmentedGerundNounProvider;
+        this.quadrilateralAugmentedMeemGerundNounProvider = quadrilateralAugmentedMeemGerundNounProvider;
+        this.quadrilateralAugmentedNomenGerundNounProvider = quadrilateralAugmentedNomenGerundNounProvider;
     }
 
     public INounProvider create(RootType rootType, NounType nounType) {
@@ -196,12 +208,12 @@ public class NounProviderFactory {
                 return quadrilateralAugmentedPassiveParticipleNounProvider;
             case TimeAndPlace:
                 return quadrilateralAugmentedTimeAndPlaceNounProvider;
-            /*case Gerund:
-                return quadrilateralUnaugmentedGerundNounProvider;
+            case Gerund:
+                return quadrilateralAugmentedGerundNounProvider;
             case NomenGerund:
-                return quadrilateralUnaugmentedNomenGerundNounProvider;
+                return quadrilateralAugmentedNomenGerundNounProvider;
             case MeemGerund:
-                return quadrilateralUnaugmentedMeemGerundNounProvider;*/
+                return quadrilateralAugmentedMeemGerundNounProvider;
         }
         return null;
     }

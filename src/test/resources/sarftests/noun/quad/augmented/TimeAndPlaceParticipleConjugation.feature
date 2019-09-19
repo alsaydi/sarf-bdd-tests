@@ -1,6 +1,6 @@
-Feature: تصريف اسم الفاعل من الفعل الرباعي المزيد
+Feature: تصريف اسم الزمان و المكان من الفعل الرباعي المزيد
 
-  Scenario Outline: augmented quadrilateral active participle
+  Scenario Outline: augmented quadrilateral time and place noun
     Given an augmented verb
     When the derived noun is from an augmented quad verb is "TimeAndPlace"
     Then singular masculine nouns of the quad verb "<verb>" of formula "<formula>" are nominative "<m_single_n>" and accusative "<m_single_a>" and genitive "<m_single_g>"
