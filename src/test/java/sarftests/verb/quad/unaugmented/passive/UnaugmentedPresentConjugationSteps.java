@@ -12,6 +12,7 @@ import sarf.verb.quadriliteral.unaugmented.UnaugmentedImperativeConjugator;
 import sarf.verb.quadriliteral.unaugmented.active.ActivePresentConjugator;
 import sarf.verb.quadriliteral.unaugmented.active.ActivePresentVerb;
 import sarf.verb.quadriliteral.unaugmented.passive.PassivePresentConjugator;
+import sarf.verb.quadriliteral.unaugmented.passive.PassivePresentVerb;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
 import sarftests.VerbState;
@@ -118,7 +119,7 @@ public class UnaugmentedPresentConjugationSteps {
         try {
             var root = sarfDictionary.getUnaugmentedQuadrilateralRoot(rootLetters);
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
-            List<ActivePresentVerb> verbs = new ArrayList<>();
+            List<PassivePresentVerb> verbs = new ArrayList<>();
             var tense = SystemConstants.PRESENT_TENSE;
             switch (testContext.VerbState) {
                 case PassiveNominative:

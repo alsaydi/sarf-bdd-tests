@@ -27,13 +27,22 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 public class AugmentedPresentConjugationSteps {
 
     private final TestContext testContext;
+    private final AugmentedActivePresentConjugator conjugator;
+    private final AugmentedImperativeConjugatorFactory imperativeConjugatorFactory;
     private final AugmentedTrilateralModifier modifier;
     private final Common common;
     private final SarfDictionary sarfDictionary;
 
     @Inject
-    public AugmentedPresentConjugationSteps(TestContext testContext, AugmentedTrilateralModifier modifier, Common common, SarfDictionary sarfDictionary){
+    public AugmentedPresentConjugationSteps(TestContext testContext
+            , AugmentedActivePresentConjugator conjugator
+            , AugmentedImperativeConjugatorFactory imperativeConjugatorFactory
+            , AugmentedTrilateralModifier modifier
+            , Common common
+            , SarfDictionary sarfDictionary){
         this.testContext = testContext;
+        this.conjugator = conjugator;
+        this.imperativeConjugatorFactory = imperativeConjugatorFactory;
         this.modifier = modifier;
         this.common = common;
         this.sarfDictionary = sarfDictionary;
@@ -123,16 +132,16 @@ public class AugmentedPresentConjugationSteps {
             List<AugmentedPresentVerb> rawVerbs;
             switch (testContext.VerbState){
                 case Nominative:
-                    rawVerbs = AugmentedActivePresentConjugator .getInstance().getNominativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    rawVerbs = conjugator.getNominativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
                 case Accusative:
-                    rawVerbs = AugmentedActivePresentConjugator .getInstance().getAccusativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    rawVerbs = conjugator.getAccusativeConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
                 case Jussive:
-                    rawVerbs = AugmentedActivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    rawVerbs = conjugator.getJussiveConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
                 case Emphasized:
-                    rawVerbs = AugmentedActivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                    rawVerbs = conjugator.getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                     break;
                 case Imperative:
                 case ImperativeEmphasized:
@@ -161,11 +170,11 @@ public class AugmentedPresentConjugationSteps {
 
         switch (testContext.VerbState) {
             case Imperative:
-                rawVerbs = AugmentedImperativeConjugatorFactory.getInstance().getNotEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                rawVerbs = imperativeConjugatorFactory.getNotEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                 break;
             case ImperativeEmphasized:
                 verbType = SystemConstants.EMPHASIZED_IMPERATIVE_TENSE;
-                rawVerbs = AugmentedImperativeConjugatorFactory.getInstance().getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
+                rawVerbs = imperativeConjugatorFactory.getEmphasizedConjugator().createVerbList(root, augmentationFormula.getFormulaNo());
                 break;
             default:
                 throw new Exception(String.format("%s is invalid", testContext.VerbState));

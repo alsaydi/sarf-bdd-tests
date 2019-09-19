@@ -118,7 +118,7 @@ public class UnaugmentedPresentConjugationSteps {
         try {
             var root = sarfDictionary.getUnaugmentedQuadrilateralRoot(rootLetters);
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
-            List<ActivePresentVerb> verbs = new ArrayList<>();
+            List verbs = new ArrayList<>();
             var tense = SystemConstants.PRESENT_TENSE;
             switch (testContext.VerbState) {
                 case Nominative:

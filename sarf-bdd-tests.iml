@@ -10,7 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: Sarf:Sarf:1.0.0-M3" level="project" />
+    <orderEntry type="library" name="Maven: Sarf:Sarf:1.0.0-M4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-digester3:3.2" level="project" />
     <orderEntry type="library" name="Maven: cglib:cglib:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.3.1" level="project" />

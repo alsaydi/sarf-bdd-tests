@@ -39,7 +39,7 @@ public class QuadrilateralAugmentedActiveParticipleNounProvider implements INoun
             List nouns; //TODO: fix the typing in the modifier build function so we don't have to do this trick.
             nouns = conjugator.createNounList(root, formula);
 
-            var conjugationResult =  modifier.build(root, 0, kovRule.getKov(), nouns).getFinalResult();
+            var conjugationResult =  modifier.build(root, formula, kovRule.getKov(), nouns).getFinalResult();
             var result = new ArrayList<String>();
             for(var n : conjugationResult){
                 result.add(n.toString());
