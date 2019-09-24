@@ -22,14 +22,17 @@ public class AugmentedPastConjugationSteps {
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
     private final QuadriAugmentedPassivePastConjugator conjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public AugmentedPastConjugationSteps(SarfDictionary sarfDictionary
             , KovRulesManager kovRulesManager
-            , QuadriAugmentedPassivePastConjugator conjugator){
+            , QuadriAugmentedPassivePastConjugator conjugator
+            , QuadrilateralModifier modifier){
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
         this.conjugator = conjugator;
+        this.modifier = modifier;
     }
 
     @Then("the first person singular conjugation of the quad passive verb {string} and formula of {string} is {string}")
@@ -111,7 +114,7 @@ public class AugmentedPastConjugationSteps {
             var formula = (AugmentationFormula) root.getAugmentationList().stream().filter(f -> ((AugmentationFormula) f).getFormulaNo() == formulaNo).findFirst().orElseThrow();
 
             var verbs = conjugator.createVerbList(root, formula.getFormulaNo());
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root
+            var conjugationResult = modifier.build(root
                     , formula.getFormulaNo()
                     , kovRule.getKov()
                     , verbs, SystemConstants.PAST_TENSE

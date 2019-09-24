@@ -9,12 +9,10 @@ import sarf.KindOfVerb;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
-import sarf.verb.quadriliteral.QuadrilateralRoot;
 import sarf.verb.quadriliteral.augmented.AugmentedPresentVerb;
 import sarf.verb.quadriliteral.augmented.AugmentedQuadrilateralRoot;
-import sarf.verb.quadriliteral.augmented.active.past.QuadrilateralAugmentedActivePastConjugator;
-import sarf.verb.quadriliteral.augmented.active.present.AugmentedActivePresentConjugator;
-import sarf.verb.quadriliteral.augmented.imperative.AugmentedImperativeConjugator;
+import sarf.verb.quadriliteral.augmented.active.present.AugmentedQuadActivePresentConjugator;
+import sarf.verb.quadriliteral.augmented.imperative.AugmentedQuadImperativeConjugator;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
@@ -31,14 +29,23 @@ public class AugmentedPresentConjugationSteps {
     private final TestContext testContext;
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
+    private final AugmentedQuadActivePresentConjugator conjugator;
+    private final AugmentedQuadImperativeConjugator imperativeConjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public AugmentedPresentConjugationSteps(TestContext testContext
             , SarfDictionary sarfDictionary
-            , KovRulesManager kovRulesManager){
+            , KovRulesManager kovRulesManager
+            , AugmentedQuadActivePresentConjugator conjugator
+            , AugmentedQuadImperativeConjugator imperativeConjugator
+            , QuadrilateralModifier modifier){
         this.testContext = testContext;
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
+        this.conjugator = conjugator;
+        this.imperativeConjugator = imperativeConjugator;
+        this.modifier = modifier;
     }
 
     @When("the augmented quadrilateral verb is actively conjugated in {string} state")
@@ -127,16 +134,16 @@ public class AugmentedPresentConjugationSteps {
             List<AugmentedPresentVerb> verbs = null;
             switch (testContext.VerbState) {
                 case Nominative:
-                    verbs = AugmentedActivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case Accusative:
-                    verbs = AugmentedActivePresentConjugator.getInstance().getAccusativeConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getAccusativeConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case Jussive:
-                    verbs = AugmentedActivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getJussiveConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case Emphasized:
-                    verbs = AugmentedActivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getEmphasizedConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case Imperative:
                 case ImperativeEmphasized:
@@ -145,7 +152,7 @@ public class AugmentedPresentConjugationSteps {
                     fail("Invalid verb state: " + testContext.VerbState);
                     return null;
             }
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PRESENT_TENSE, true, true)
+            var conjugationResult = modifier.build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PRESENT_TENSE, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();
             for (var v : conjugationResult) {
@@ -161,9 +168,9 @@ public class AugmentedPresentConjugationSteps {
 
     private List<String> getImperativeVerbs(AugmentedQuadrilateralRoot root, KindOfVerb kov,  int formulaNo) {
         var verbs = testContext.VerbState == VerbState.Imperative ?
-                AugmentedImperativeConjugator.getInstance().getNotEmphsizedConjugator().createVerbList(root, formulaNo)
-                : AugmentedImperativeConjugator.getInstance().getEmphsizedConjugator().createVerbList(root, formulaNo);
-        var conjugationResult = QuadrilateralModifier.getInstance().build(root, formulaNo, kov, verbs
+                imperativeConjugator.getNotEmphasizedConjugator().createVerbList(root, formulaNo)
+                : imperativeConjugator.getEmphasizedConjugator().createVerbList(root, formulaNo);
+        var conjugationResult = modifier.build(root, formulaNo, kov, verbs
                 , testContext.VerbState == VerbState.Imperative ? SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE : SystemConstants.EMPHASIZED_IMPERATIVE_TENSE
                 , true
                 , true)

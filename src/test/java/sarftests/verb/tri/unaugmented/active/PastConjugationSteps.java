@@ -19,11 +19,15 @@ import static sarftests.PronounIndex.*;
 
 public class PastConjugationSteps {
     private final ActivePastConjugator activePastConjugator;
+    private final UnaugmentedTrilateralModifier modifier;
     private final Common common;
 
     @Inject
-    public PastConjugationSteps(ActivePastConjugator activePastConjugator, Common common){
+    public PastConjugationSteps(ActivePastConjugator activePastConjugator
+            , UnaugmentedTrilateralModifier modifier
+            , Common common){
         this.activePastConjugator = activePastConjugator;
+        this.modifier = modifier;
         this.common = common;
     }
 
@@ -122,8 +126,7 @@ public class PastConjugationSteps {
 
         var root = common.createRoot(rootLetters, conjugation);
         var verbs = activePastConjugator.createVerbList(root);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
-                .getInstance()
+        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
                 .build(root, kov, verbs, SystemConstants.PAST_TENSE, true);
         var result = new ArrayList<String>();
         for (var v : conjResult.getFinalResult()) {

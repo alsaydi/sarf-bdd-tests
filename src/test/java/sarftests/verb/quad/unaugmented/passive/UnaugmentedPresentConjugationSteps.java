@@ -8,11 +8,8 @@ import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
-import sarf.verb.quadriliteral.unaugmented.UnaugmentedImperativeConjugator;
-import sarf.verb.quadriliteral.unaugmented.active.ActivePresentConjugator;
-import sarf.verb.quadriliteral.unaugmented.active.ActivePresentVerb;
-import sarf.verb.quadriliteral.unaugmented.passive.PassivePresentConjugator;
 import sarf.verb.quadriliteral.unaugmented.passive.PassivePresentVerb;
+import sarf.verb.quadriliteral.unaugmented.passive.QuadPassivePresentConjugator;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
 import sarftests.VerbState;
@@ -28,14 +25,20 @@ public class UnaugmentedPresentConjugationSteps {
     private final TestContext testContext;
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
+    private final QuadPassivePresentConjugator conjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public UnaugmentedPresentConjugationSteps(TestContext testContext
             , SarfDictionary sarfDictionary
-            , KovRulesManager kovRulesManager) {
+            , KovRulesManager kovRulesManager
+            , QuadPassivePresentConjugator conjugator
+            , QuadrilateralModifier modifier) {
         this.testContext = testContext;
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
+        this.conjugator = conjugator;
+        this.modifier = modifier;
     }
 
     @When("the quadrilateral verb is passively conjugated in {string} state")
@@ -123,22 +126,22 @@ public class UnaugmentedPresentConjugationSteps {
             var tense = SystemConstants.PRESENT_TENSE;
             switch (testContext.VerbState) {
                 case PassiveNominative:
-                    verbs = PassivePresentConjugator.getInstance().createNominativeVerbList(root);
+                    verbs = conjugator.createNominativeVerbList(root);
                     break;
                 case PassiveAccusative:
-                    verbs = PassivePresentConjugator.getInstance().createAccusativeVerbList(root);
+                    verbs = conjugator.createAccusativeVerbList(root);
                     break;
                 case PassiveJussive:
-                    verbs = PassivePresentConjugator.getInstance().createJussiveVerbList(root);
+                    verbs = conjugator.createJussiveVerbList(root);
                     break;
                 case PassiveEmphasized:
-                    verbs = PassivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+                    verbs = conjugator.createEmphasizedVerbList(root);
                     break;
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
             }
 
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, 0, kovRule.getKov(), verbs
+            var conjugationResult = modifier.build(root, 0, kovRule.getKov(), verbs
                     , tense, false, true)
                     .getFinalResult();
             var result = new ArrayList<String>();

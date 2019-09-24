@@ -5,15 +5,11 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarf.AugmentationFormula;
-import sarf.KindOfVerb;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
 import sarf.verb.quadriliteral.augmented.AugmentedPresentVerb;
-import sarf.verb.quadriliteral.augmented.AugmentedQuadrilateralRoot;
-import sarf.verb.quadriliteral.augmented.active.present.AugmentedActivePresentConjugator;
-import sarf.verb.quadriliteral.augmented.imperative.AugmentedImperativeConjugator;
-import sarf.verb.quadriliteral.augmented.passive.present.AugmentedPassivePresentConjugator;
+import sarf.verb.quadriliteral.augmented.passive.present.AugmentedQuadPassivePresentConjugator;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
@@ -30,14 +26,18 @@ public class AugmentedPresentConjugationSteps {
     private final TestContext testContext;
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
+    private final AugmentedQuadPassivePresentConjugator conjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public AugmentedPresentConjugationSteps(TestContext testContext
             , SarfDictionary sarfDictionary
-            , KovRulesManager kovRulesManager){
+            , KovRulesManager kovRulesManager, AugmentedQuadPassivePresentConjugator conjugator, QuadrilateralModifier modifier){
         this.testContext = testContext;
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
+        this.conjugator = conjugator;
+        this.modifier = modifier;
     }
 
     @When("the augmented quadrilateral verb is passively conjugated in {string} state")
@@ -126,22 +126,22 @@ public class AugmentedPresentConjugationSteps {
             List<AugmentedPresentVerb> verbs = null;
             switch (testContext.VerbState) {
                 case PassiveNominative:
-                    verbs = AugmentedPassivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getNominativeConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case PassiveAccusative:
-                    verbs = AugmentedPassivePresentConjugator.getInstance().getAccusativeConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getAccusativeConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case PassiveJussive:
-                    verbs = AugmentedPassivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getJussiveConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 case PassiveEmphasized:
-                    verbs = AugmentedPassivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, formula.getFormulaNo());
+                    verbs = conjugator.getEmphasizedConjugator().createVerbList(root, formula.getFormulaNo());
                     break;
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
                     return null;
             }
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root
+            var conjugationResult = modifier.build(root
                     , formula.getFormulaNo()
                     , kovRule.getKov()
                     , verbs, SystemConstants.PRESENT_TENSE

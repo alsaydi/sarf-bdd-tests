@@ -24,11 +24,17 @@ import static org.assertj.core.api.Assertions.fail;
 public class PresentConjugationSteps {
     private final TestContext testContext;
     private final Common common;
+    private final ActivePresentConjugator conjugator;
+    private final UnaugmentedImperativeConjugator imperativeConjugator;
+    private final UnaugmentedTrilateralModifier modifier;
 
     @Inject
-    public PresentConjugationSteps(TestContext testContext, Common common){
+    public PresentConjugationSteps(TestContext testContext, Common common, ActivePresentConjugator conjugator, UnaugmentedImperativeConjugator imperativeConjugator, UnaugmentedTrilateralModifier modifier){
         this.testContext = testContext;
         this.common = common;
+        this.conjugator = conjugator;
+        this.imperativeConjugator = imperativeConjugator;
+        this.modifier = modifier;
     }
     @When("the verb is conjugated in {string} state")
     public void theVerbIsConjugatedInState(String state) {
@@ -116,8 +122,7 @@ public class PresentConjugationSteps {
 
         var root = common.createRoot(rootLetters, conjugation);
         var verbs = getVerbs(root, testContext.VerbState);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
-                .getInstance()
+        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
                 .build(root, kov, verbs, verbStateString, true);
         var result = new ArrayList<String>();
         for (var v : conjResult.getFinalResult()) {
@@ -133,17 +138,17 @@ public class PresentConjugationSteps {
     private List getVerbs(UnaugmentedTrilateralRoot root, VerbState verbState) {
         switch (verbState){
             case Nominative:
-                return ActivePresentConjugator.getInstance().createNominativeVerbList(root);
+                return conjugator.createNominativeVerbList(root);
             case Accusative:
-                return ActivePresentConjugator.getInstance().createAccusativeVerbList(root);
+                return conjugator.createAccusativeVerbList(root);
             case Jussive:
-                return ActivePresentConjugator.getInstance().createJussiveVerbList(root);
+                return conjugator.createJussiveVerbList(root);
             case Emphasized:
-                return ActivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+                return conjugator.createEmphasizedVerbList(root);
             case Imperative:
-                return UnaugmentedImperativeConjugator.getInstance().createVerbList(root);
+                return imperativeConjugator.createVerbList(root);
             case ImperativeEmphasized:
-                return UnaugmentedImperativeConjugator.getInstance().createEmphasizedVerbList(root);
+                return imperativeConjugator.createEmphasizedVerbList(root);
             case None:
             default:
                 fail("invalid present verb state " + verbState);

@@ -7,8 +7,8 @@ import sarf.KindOfVerb;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
-import sarf.kov.TrilateralKovRule;
 import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
+import sarf.verb.trilateral.unaugmented.active.ActivePresentConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
 import sarf.verb.trilateral.unaugmented.active.ActivePastConjugator;
 
@@ -22,12 +22,20 @@ public class Roots {
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
     private final ActivePastConjugator activePastConjugator;
+    private final ActivePresentConjugator activePresentConjugator;
+    private final UnaugmentedTrilateralModifier modifier;
 
     @Inject
-    public Roots(SarfDictionary sarfDictionary, KovRulesManager kovRulesManager, ActivePastConjugator activePastConjugator){
+    public Roots(SarfDictionary sarfDictionary
+            , KovRulesManager kovRulesManager
+            , ActivePastConjugator activePastConjugator
+            , ActivePresentConjugator activePresentConjugator
+            , UnaugmentedTrilateralModifier modifier){
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
         this.activePastConjugator = activePastConjugator;
+        this.activePresentConjugator = activePresentConjugator;
+        this.modifier = modifier;
     }
 
     @When("I request all roots")
@@ -77,19 +85,17 @@ public class Roots {
         String pastRootText = activePastConjugator.createVerb(7, root).toString();
         List<String> conjugations = createEmptyList();
         conjugations.set(7, pastRootText);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
-                .getInstance()
+        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
                 .build(root, kov, conjugations, SystemConstants.PAST_TENSE, true);
         return conjResult.getFinalResult().get(7).toString();
     }
 
     private String getPresentRootText(UnaugmentedTrilateralRoot root, KindOfVerb kov){
         //present text formatting
-        String presentRootText = sarf.verb.trilateral.unaugmented.active.ActivePresentConjugator.getInstance().createNominativeVerb(7, root).toString();
+        String presentRootText = activePresentConjugator.createNominativeVerb(7, root).toString();
         List<String> conjugations = createEmptyList();
         conjugations.set(7, presentRootText);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
-                .getInstance()
+        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
                 .build(root, kov, conjugations, SystemConstants.PRESENT_TENSE, true);
         return conjResult.getFinalResult().get(7).toString();
     }

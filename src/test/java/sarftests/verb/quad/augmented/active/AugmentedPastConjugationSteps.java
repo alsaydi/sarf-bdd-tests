@@ -3,7 +3,6 @@ package sarftests.verb.quad.augmented.active;
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import org.apache.commons.beanutils.PropertyUtils;
 import sarf.AugmentationFormula;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
@@ -23,14 +22,17 @@ public class AugmentedPastConjugationSteps {
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
     private final QuadrilateralAugmentedActivePastConjugator conjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public AugmentedPastConjugationSteps(SarfDictionary sarfDictionary
             , KovRulesManager kovRulesManager
-            , QuadrilateralAugmentedActivePastConjugator conjugator){
+            , QuadrilateralAugmentedActivePastConjugator conjugator
+            , QuadrilateralModifier modifier){
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
         this.conjugator = conjugator;
+        this.modifier = modifier;
     }
 
     @Then("the first person singular conjugation of the quad verb {string} and formula of {string} is {string}")
@@ -112,7 +114,7 @@ public class AugmentedPastConjugationSteps {
             var formula = (AugmentationFormula) root.getAugmentationList().stream().filter(f -> ((AugmentationFormula) f).getFormulaNo() == formulaNo).findFirst().orElseThrow();
 
             var verbs = conjugator.createVerbList(root, formula.getFormulaNo());
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PAST_TENSE, true, true)
+            var conjugationResult = modifier.build(root, formula.getFormulaNo(), kovRule.getKov(), verbs, SystemConstants.PAST_TENSE, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();
 

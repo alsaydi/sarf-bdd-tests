@@ -21,14 +21,17 @@ public class UnaugmentedPastConjugationSteps {
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
     private final QuadriActivePastConjugator conjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public UnaugmentedPastConjugationSteps(SarfDictionary sarfDictionary
-             , KovRulesManager kovRulesManager
-            , QuadriActivePastConjugator conjugator) {
+            , KovRulesManager kovRulesManager
+            , QuadriActivePastConjugator conjugator
+            , QuadrilateralModifier modifier) {
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
         this.conjugator = conjugator;
+        this.modifier = modifier;
     }
 
     @Then("the first person singular conjugation of the verb {string}is {string}")
@@ -109,7 +112,7 @@ public class UnaugmentedPastConjugationSteps {
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
             var verbs = conjugator.createVerbList(root);
 
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, 0, kovRule.getKov(), verbs, SystemConstants.PAST_TENSE, true, true)
+            var conjugationResult = modifier.build(root, 0, kovRule.getKov(), verbs, SystemConstants.PAST_TENSE, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();
             for(var v : conjugationResult){

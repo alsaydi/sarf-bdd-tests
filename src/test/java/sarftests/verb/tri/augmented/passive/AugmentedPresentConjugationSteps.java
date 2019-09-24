@@ -24,13 +24,19 @@ public class AugmentedPresentConjugationSteps {
 
     private final Common common;
     private final SarfDictionary sarfDictionary;
+    private final AugmentedPassivePresentConjugator conjugator;
     private final AugmentedTrilateralModifier modifier;
     private final TestContext testContext;
 
     @Inject
-    public AugmentedPresentConjugationSteps(Common common, SarfDictionary sarfDictionary, AugmentedTrilateralModifier modifier, TestContext testContext) {
+    public AugmentedPresentConjugationSteps(Common common
+            , SarfDictionary sarfDictionary
+            , AugmentedPassivePresentConjugator conjugator
+            , AugmentedTrilateralModifier modifier
+            , TestContext testContext) {
         this.common = common;
         this.sarfDictionary = sarfDictionary;
+        this.conjugator = conjugator;
         this.modifier = modifier;
         this.testContext = testContext;
     }
@@ -140,13 +146,13 @@ public class AugmentedPresentConjugationSteps {
     private List getRawVerbs(AugmentedTrilateralRoot root, int formulaNo, VerbState verbState) {
         switch (verbState) {
             case PassiveNominative:
-                return AugmentedPassivePresentConjugator.getInstance().getNominativeConjugator().createVerbList(root, formulaNo);
+                return conjugator.getNominativeConjugator().createVerbList(root, formulaNo);
             case PassiveAccusative:
-                return AugmentedPassivePresentConjugator.getInstance().getAccusativeConjugator().createVerbList(root, formulaNo);
+                return conjugator.getAccusativeConjugator().createVerbList(root, formulaNo);
             case PassiveJussive:
-                return AugmentedPassivePresentConjugator.getInstance().getJussiveConjugator().createVerbList(root, formulaNo);
+                return conjugator.getJussiveConjugator().createVerbList(root, formulaNo);
             case PassiveEmphasized:
-                return AugmentedPassivePresentConjugator.getInstance().getEmphasizedConjugator().createVerbList(root, formulaNo);
+                return conjugator.getEmphasizedConjugator().createVerbList(root, formulaNo);
             default:
                 fail("Invalid verb state: " + verbState);
         }

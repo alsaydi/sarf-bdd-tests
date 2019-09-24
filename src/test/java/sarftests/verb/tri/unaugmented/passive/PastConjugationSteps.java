@@ -19,11 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PastConjugationSteps {
     private final Common common;
     private final PassivePastConjugator passivePastConjugator;
+    private final UnaugmentedTrilateralModifier modifier;
 
     @Inject
-    public PastConjugationSteps(Common common, PassivePastConjugator passivePastConjugator){
+    public PastConjugationSteps(Common common
+            , PassivePastConjugator passivePastConjugator
+            , UnaugmentedTrilateralModifier modifier){
         this.common = common;
         this.passivePastConjugator = passivePastConjugator;
+        this.modifier = modifier;
     }
 
     @Then("the first person singular past conjugation of the passive verb {string} and conjugation of {string} is {string}")
@@ -100,7 +104,7 @@ public class PastConjugationSteps {
         KindOfVerb kov = common.getKindOfVerb(rootLetters);
         var root = common.createRoot(rootLetters, conjugation);
         var result = passivePastConjugator.createVerbList(root);
-        ConjugationResult conjResult = UnaugmentedTrilateralModifier.getInstance().build(root, kov, result, SystemConstants.PAST_TENSE, false);
+        ConjugationResult conjResult = modifier.build(root, kov, result, SystemConstants.PAST_TENSE, false);
         result = conjResult.getFinalResult();
         var conjugatedResult = new ArrayList<String>();
         for(Object r : result){

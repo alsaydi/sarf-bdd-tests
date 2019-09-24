@@ -8,10 +8,8 @@ import sarf.SarfDictionary;
 import sarf.SystemConstants;
 import sarf.kov.KovRulesManager;
 import sarf.verb.quadriliteral.modifier.QuadrilateralModifier;
-import sarf.verb.quadriliteral.unaugmented.UnaugmentedImperativeConjugator;
-import sarf.verb.quadriliteral.unaugmented.active.ActivePresentConjugator;
-import sarf.verb.quadriliteral.unaugmented.active.ActivePresentVerb;
-import sarf.verb.quadriliteral.unaugmented.active.QuadriActivePastConjugator;
+import sarf.verb.quadriliteral.unaugmented.QuadUnaugmentedImperativeConjugator;
+import sarf.verb.quadriliteral.unaugmented.active.QuadActivePresentConjugator;
 import sarftests.PronounIndex;
 import sarftests.TestContext;
 import sarftests.VerbState;
@@ -27,14 +25,23 @@ public class UnaugmentedPresentConjugationSteps {
     private final TestContext testContext;
     private final SarfDictionary sarfDictionary;
     private final KovRulesManager kovRulesManager;
+    private final QuadActivePresentConjugator conjugator;
+    private final QuadUnaugmentedImperativeConjugator imperativeConjugator;
+    private final QuadrilateralModifier modifier;
 
     @Inject
     public UnaugmentedPresentConjugationSteps(TestContext testContext
             , SarfDictionary sarfDictionary
-            , KovRulesManager kovRulesManager) {
+            , KovRulesManager kovRulesManager
+            , QuadActivePresentConjugator conjugator
+            , QuadUnaugmentedImperativeConjugator imperativeConjugator
+            , QuadrilateralModifier modifier) {
         this.testContext = testContext;
         this.sarfDictionary = sarfDictionary;
         this.kovRulesManager = kovRulesManager;
+        this.conjugator = conjugator;
+        this.imperativeConjugator = imperativeConjugator;
+        this.modifier = modifier;
     }
 
     @When("the quadrilateral verb is conjugated in {string} state")
@@ -122,30 +129,30 @@ public class UnaugmentedPresentConjugationSteps {
             var tense = SystemConstants.PRESENT_TENSE;
             switch (testContext.VerbState) {
                 case Nominative:
-                    verbs = ActivePresentConjugator.getInstance().createNominativeVerbList(root);
+                    verbs = conjugator.createNominativeVerbList(root);
                     break;
                 case Accusative:
-                    verbs = ActivePresentConjugator.getInstance().createAccusativeVerbList(root);
+                    verbs = conjugator.createAccusativeVerbList(root);
                     break;
                 case Jussive:
-                    verbs = ActivePresentConjugator.getInstance().createJussiveVerbList(root);
+                    verbs = conjugator.createJussiveVerbList(root);
                     break;
                 case Emphasized:
-                    verbs = ActivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+                    verbs = conjugator.createEmphasizedVerbList(root);
                     break;
                 case Imperative:
-                    verbs = UnaugmentedImperativeConjugator.getInstance().createVerbList(root);
+                    verbs = imperativeConjugator.createVerbList(root);
                     tense = SystemConstants.NOT_EMPHASIZED_IMPERATIVE_TENSE;
                     break;
                 case ImperativeEmphasized:
-                    verbs = UnaugmentedImperativeConjugator.getInstance().createEmphasizedVerbList(root);
+                    verbs = imperativeConjugator.createEmphasizedVerbList(root);
                     tense = SystemConstants.EMPHASIZED_IMPERATIVE_TENSE;
                     break;
                 default:
                     fail("Invalid verb state: " + testContext.VerbState);
             }
 
-            var conjugationResult = QuadrilateralModifier.getInstance().build(root, 0, kovRule.getKov(), verbs
+            var conjugationResult = modifier.build(root, 0, kovRule.getKov(), verbs
                     , tense, true, true)
                     .getFinalResult();
             var result = new ArrayList<String>();

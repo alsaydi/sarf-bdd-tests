@@ -22,11 +22,18 @@ import static org.assertj.core.api.Assertions.fail;
 public class PresentConjugationSteps {
     private final TestContext testContext;
     private final Common common;
+    private final PassivePresentConjugator conjugator;
+    private final UnaugmentedTrilateralModifier modifier;
 
     @Inject
-    public PresentConjugationSteps(TestContext testContext, Common common){
+    public PresentConjugationSteps(TestContext testContext
+            , Common common
+            , PassivePresentConjugator conjugator
+            , UnaugmentedTrilateralModifier modifier){
         this.testContext = testContext;
         this.common = common;
+        this.conjugator = conjugator;
+        this.modifier = modifier;
     }
 
     @When("the passive verb is conjugated in {string} state")
@@ -107,8 +114,7 @@ public class PresentConjugationSteps {
         var kov = common.getKindOfVerb(rootLetters);
         var root = common.createRoot(rootLetters, conjugation);
         var verbs = getVerbs(root, this.testContext.VerbState);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = UnaugmentedTrilateralModifier
-                .getInstance()
+        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
                 .build(root, kov, verbs, SystemConstants.PRESENT_TENSE, false);
         var result = new ArrayList<String>();
         for (var v : conjResult.getFinalResult()) {
@@ -124,13 +130,13 @@ public class PresentConjugationSteps {
     private List getVerbs(UnaugmentedTrilateralRoot root, VerbState verbState){
         switch (verbState){
             case PassiveNominative:
-                return PassivePresentConjugator.getInstance().createNominativeVerbList(root);
+                return conjugator.createNominativeVerbList(root);
             case PassiveAccusative:
-                return PassivePresentConjugator.getInstance().createAccusativeVerbList(root);
+                return conjugator.createAccusativeVerbList(root);
             case PassiveJussive:
-                return PassivePresentConjugator.getInstance().createJussiveVerbList(root);
+                return conjugator.createJussiveVerbList(root);
             case PassiveEmphasized:
-                return PassivePresentConjugator.getInstance().createEmphasizedVerbList(root);
+                return conjugator.createEmphasizedVerbList(root);
             case None:
             default:
                 fail("invalid present passive verb state " + verbState);
