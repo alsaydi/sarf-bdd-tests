@@ -1,6 +1,8 @@
 package sarftests.noun;
 
 public enum NounType {
-    ActiveParticiple
+    ActiveParticiple, PassiveParticiple, EmphasizedActiveParticiple
+    , TimeAndPlace, Instrument, Assimilate, Elative
+    , Gerund, MeemGerund, NomenGerund, QualityGerund
 }
 
