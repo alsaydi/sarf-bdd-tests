@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarf.SystemConstants;
+import sarf.Word;
 import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.active.ActivePresentConjugator;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
@@ -122,7 +123,7 @@ public class PresentConjugationSteps {
 
         var root = common.createRoot(rootLetters, conjugation);
         var verbs = getVerbs(root, testContext.VerbState);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
+        var conjResult = modifier
                 .build(root, kov, verbs, verbStateString, true);
         var result = new ArrayList<String>();
         for (var v : conjResult.getFinalResult()) {
@@ -135,7 +136,7 @@ public class PresentConjugationSteps {
         return result;
     }
 
-    private List getVerbs(UnaugmentedTrilateralRoot root, VerbState verbState) {
+    private List<? extends Word> getVerbs(UnaugmentedTrilateralRoot root, VerbState verbState) {
         switch (verbState){
             case Nominative:
                 return conjugator.createNominativeVerbList(root);

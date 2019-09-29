@@ -5,7 +5,6 @@ import sarf.SarfDictionary;
 import sarf.kov.KovRulesManager;
 import sarf.noun.quadriliteral.modifier.passiveparticiple.PassiveParticipleModifier;
 import sarf.noun.quadriliteral.unaugmented.UnaugmentedQuadrilateralPassiveParticipleConjugator;
-import sarf.verb.quadriliteral.unaugmented.passive.QuadriUnaugmentedPassivePastConjugator;
 import sarftests.noun.INounProvider;
 
 import java.util.ArrayList;

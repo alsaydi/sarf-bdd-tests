@@ -2,9 +2,7 @@ package sarftests.noun.tri.augmented;
 
 import com.google.inject.Inject;
 import sarf.SarfDictionary;
-import sarf.noun.trilateral.augmented.AugmentedTrilateralActiveParticipleConjugator;
 import sarf.noun.trilateral.augmented.AugmentedTrilateralPassiveParticipleConjugator;
-import sarf.noun.trilateral.augmented.modifier.activeparticiple.ActiveParticipleModifier;
 import sarf.noun.trilateral.augmented.modifier.passiveparticiple.PassiveParticipleModifier;
 import sarftests.noun.INounProvider;
 import sarftests.verb.tri.Common;

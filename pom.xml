@@ -6,7 +6,7 @@
 
     <groupId>Sarf</groupId>
     <artifactId>sarf-bdd-tests</artifactId>
-    <version>1.0.09232019</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>Sarf</groupId>
             <artifactId>Sarf</artifactId>
-            <version>1.0.0-M5</version>
+            <version>1.0.09282019</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>

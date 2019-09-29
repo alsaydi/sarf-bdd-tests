@@ -6,7 +6,7 @@ import sarftests.noun.NounType;
 @ScenarioScoped
 public class TestContext {
     public TestContext(){
-        VerbState = VerbState.Nominative;
+        VerbState = sarftests.VerbState.Nominative;
         NounType = sarftests.noun.NounType.ActiveParticiple;
         RootType = sarftests.RootType.TrilateralUnaugmented;
     }

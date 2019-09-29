@@ -3,9 +3,7 @@ package sarftests.verb.tri.unaugmented.passive;
 import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import sarf.KindOfVerb;
-import sarf.SystemConstants;
-import sarf.verb.trilateral.unaugmented.ConjugationResult;
+import sarf.*;
 import sarf.verb.trilateral.unaugmented.modifier.UnaugmentedTrilateralModifier;
 import sarf.verb.trilateral.unaugmented.passive.PassivePastConjugator;
 import sarftests.PronounIndex;
@@ -103,11 +101,11 @@ public class PastConjugationSteps {
     private List<String> getPastPassiveVerbConjugations(String rootLetters, int conjugation){
         KindOfVerb kov = common.getKindOfVerb(rootLetters);
         var root = common.createRoot(rootLetters, conjugation);
-        var result = passivePastConjugator.createVerbList(root);
+        List<? extends Word> result = passivePastConjugator.createVerbList(root);
         ConjugationResult conjResult = modifier.build(root, kov, result, SystemConstants.PAST_TENSE, false);
-        result = conjResult.getFinalResult();
+        var finalResult = conjResult.getFinalResult();
         var conjugatedResult = new ArrayList<String>();
-        for(Object r : result){
+        for(WordPresenter r : finalResult){
             if(r == null){
                 conjugatedResult.add("");
                 continue;

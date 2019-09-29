@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import sarf.SarfDictionary;
 import sarf.gerund.modifier.quadrilateral.QuadrilateralStandardModifier;
 import sarf.gerund.quadrilateral.augmented.QuadrilateralAugmentedGerundConjugator;
-import sarf.gerund.quadrilateral.unaugmented.QuadrilateralUnaugmentedGerundConjugator;
 import sarf.kov.KovRulesManager;
 import sarftests.noun.INounProvider;
 

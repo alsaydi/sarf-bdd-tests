@@ -123,7 +123,7 @@ public class AugmentedPresentConjugationSteps {
             var kovRule = kovRulesManager.getQuadrilateralKovRule(root.getC1(), root.getC2(), root.getC3(), root.getC4());
             var formula = (AugmentationFormula) root.getAugmentationList().stream().filter(f -> ((AugmentationFormula) f).getFormulaNo() == formulaNo).findFirst().orElseThrow();
 
-            List<AugmentedPresentVerb> verbs = null;
+            List<AugmentedPresentVerb> verbs;
             switch (testContext.VerbState) {
                 case PassiveNominative:
                     verbs = conjugator.getNominativeConjugator().createVerbList(root, formula.getFormulaNo());

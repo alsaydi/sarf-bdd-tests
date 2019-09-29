@@ -6,7 +6,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import sarftests.RootType;
 import sarftests.TestContext;
-import sarftests.VerbState;
 import sarftests.noun.NounIndex;
 import sarftests.noun.NounProviderFactory;
 import sarftests.noun.NounType;

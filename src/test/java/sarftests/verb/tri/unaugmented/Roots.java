@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import sarf.KindOfVerb;
 import sarf.SarfDictionary;
 import sarf.SystemConstants;
+import sarf.Word;
 import sarf.kov.KovRulesManager;
 import sarf.verb.trilateral.unaugmented.UnaugmentedTrilateralRoot;
 import sarf.verb.trilateral.unaugmented.active.ActivePresentConjugator;
@@ -83,26 +84,24 @@ public class Roots {
 
     private String getPastRootText(UnaugmentedTrilateralRoot root, KindOfVerb kov) {
         String pastRootText = activePastConjugator.createVerb(7, root).toString();
-        List<String> conjugations = createEmptyList();
-        conjugations.set(7, pastRootText);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
-                .build(root, kov, conjugations, SystemConstants.PAST_TENSE, true);
+        List<Word> conjugations = createEmptyList();
+        conjugations.set(7, Word.fromString(pastRootText));
+        var conjResult = modifier.build(root, kov, conjugations, SystemConstants.PAST_TENSE, true);
         return conjResult.getFinalResult().get(7).toString();
     }
 
     private String getPresentRootText(UnaugmentedTrilateralRoot root, KindOfVerb kov){
         //present text formatting
         String presentRootText = activePresentConjugator.createNominativeVerb(7, root).toString();
-        List<String> conjugations = createEmptyList();
-        conjugations.set(7, presentRootText);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
-                .build(root, kov, conjugations, SystemConstants.PRESENT_TENSE, true);
+        var conjugations = createEmptyList();
+        conjugations.set(7, Word.fromString(presentRootText));
+        var conjResult = modifier.build(root, kov, conjugations, SystemConstants.PRESENT_TENSE, true);
         return conjResult.getFinalResult().get(7).toString();
     }
 
-    private static List<String> createEmptyList() {
+    private static List<Word> createEmptyList() {
         return IntStream.range(0,13)
-                .mapToObj(a -> "")
+                .mapToObj(a -> Word.empty())
                 .collect(Collectors.toList());
     }
 }

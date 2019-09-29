@@ -126,8 +126,7 @@ public class PastConjugationSteps {
 
         var root = common.createRoot(rootLetters, conjugation);
         var verbs = activePastConjugator.createVerbList(root);
-        sarf.verb.trilateral.unaugmented.ConjugationResult conjResult = modifier
-                .build(root, kov, verbs, SystemConstants.PAST_TENSE, true);
+        var conjResult = modifier.build(root, kov, verbs, SystemConstants.PAST_TENSE, true);
         var result = new ArrayList<String>();
         for (var v : conjResult.getFinalResult()) {
             result.add(v.toString());

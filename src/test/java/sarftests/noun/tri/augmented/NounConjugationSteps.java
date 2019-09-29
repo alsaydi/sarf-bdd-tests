@@ -9,7 +9,6 @@ import sarftests.TestContext;
 import sarftests.noun.NounIndex;
 import sarftests.noun.NounProviderFactory;
 import sarftests.noun.NounType;
-import sarftests.verb.tri.Common;
 
 import java.util.List;
 

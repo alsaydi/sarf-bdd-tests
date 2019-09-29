@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import sarf.WordPresenter;
 import sarftests.RootType;
 import sarftests.TestContext;
 import sarftests.noun.NounIndex;
